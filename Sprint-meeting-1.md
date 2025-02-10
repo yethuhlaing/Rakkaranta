@@ -5,7 +5,7 @@
 - **Ye Thu Hlaing**: Project Manager  
 - **Ahanaf Adil**: Frontend Developer  
 - **Dianzhong Wang**: Embedded Engineer  
-- **Qian Wang**: Scram master
+- **Qian Wang**: Scrum master
 
 ---
 
