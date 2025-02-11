@@ -1,12 +1,11 @@
-Warehouse Safety Enhancer
- Distance Monitoring with LED Warning System
+Rakkaranta
+ IoT Integrated Platform
 
 1. About the Project
 
  OBJECTIVES:
- Use ultrasonic sensors or other sensors to monitor the
- dynamics in the warehouse in real time and detect
- dangerous situations. When the system detects potential
+ Use ultrasonic sensors or other sensors to monitor the real time dynamics across cabins, saunas, swimming pools, and outdoor areas in a resort. 
+ When the system detects potential
  dangers, it automatically triggers sound and LED lights to
  alarm.
  The system will continuously collect sensor data, use big
