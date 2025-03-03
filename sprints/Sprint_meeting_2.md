@@ -38,7 +38,7 @@ Local Backup: SD card (if offline).
  Hosts a REST API for the web UI.
 
 Web UI:
- Frontend: React.js/Flask for real-time
+ Frontend: Nextjs/Nodejs for real-time
   graphs and alerts.
   User authentication via OAuth2/JWT.
  Protocols:
