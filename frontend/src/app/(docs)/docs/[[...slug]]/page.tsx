@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { allDocs } from "contentlayer/generated";
 
 import { getTableOfContents } from "@/lib/toc";
 import { Mdx } from "@/components/content/mdx-components";
@@ -12,6 +11,7 @@ import "@/styles/mdx.css";
 import { Metadata } from "next";
 
 import { constructMetadata, getBlurDataURL } from "@/lib/utils";
+import { allDocs } from "contentlayer/generated";
 
 interface DocPageProps {
     params: {

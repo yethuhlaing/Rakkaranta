@@ -220,6 +220,7 @@ const components = {
 interface MdxProps {
     code: string;
     images?: { alt: string; src: string; blurDataURL: string }[];
+    alt?: "Something"
 }
 
 export function Mdx({ code, images }: MdxProps) {

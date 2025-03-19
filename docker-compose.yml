@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   frontend:
-    container_name: frontend
+    container_name: rakkaranta-frontend
     restart: unless-stopped
     build:
       context: ./frontend
@@ -44,7 +44,7 @@ services:
       - backend
 
   backend:
-    container_name: backend
+    container_name: rakkaranta-backend
     restart: unless-stopped
     build:
       context: ./backend
@@ -74,20 +74,12 @@ services:
           action: sync
           ignore:
             - node_modules/
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 512M
-        reservations:
-          cpus: '0.25'
-          memory: 64M
     depends_on:
       - mosquitto
       - influxdb
 
   mosquitto:
-    container_name: mosquitto
+    container_name: rakkaranta-mosquitto
     image: eclipse-mosquitto:latest
     restart: unless-stopped
     ports:
@@ -101,8 +93,8 @@ services:
       - ./mosquitto/config/passwd/passwd.txt:/mosquitto/config/passwd/passwd.txt
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
-      - ./mosquitto/init.sh:/init.sh
-    entrypoint: ["./init.sh"]
+      - ./mosquitto/init.sh:/mosquitto/init.sh
+    entrypoint: ["/mosquitto/init.sh"]
     networks:
       - app-network
     develop:
@@ -113,25 +105,14 @@ services:
           ignore:
             - data/
             - log/
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 512M
-        reservations:
-          cpus: '0.25'
-          memory: 64M
   
   mosquitto-publisher:
-    container_name: mosquitto-publisher
+    container_name: rakkaranta-mosquitto-publisher
     build:
       context: ./mosquitto
       dockerfile: Dockerfile
     env_file:
       - ./mosquitto/.env
-    depends_on:
-      mosquitto:
-        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
@@ -146,7 +127,7 @@ services:
           path: ./mosquitto/package.json
 
   influxdb:
-    container_name: influxdb
+    container_name: rakkaranta-influxdb
     image: influxdb:latest
     restart: unless-stopped
     ports:
@@ -166,7 +147,7 @@ services:
       start_period: 30s
 
   telegraf:
-    container_name: telegraf
+    container_name: rakkaranta-telegraf
     image: telegraf:latest
     restart: unless-stopped
     env_file:
@@ -179,8 +160,6 @@ services:
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     depends_on:
       influxdb:
-        condition: service_healthy
-      mosquitto:
         condition: service_healthy
     develop:
       watch:

@@ -43,8 +43,6 @@ telegraf/.env*
 *.tsbuildinfo
 next-env.d.ts
 
-# Contentlayer configuration
-.contentlayer
 
 # Backend-specific ignores (if backend uses node_modules or other build artifacts)
 frontend/node_modules/

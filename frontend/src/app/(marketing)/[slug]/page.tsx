@@ -50,6 +50,7 @@ export default async function PagePage({
         page.images.map(async (src: string) => ({
             src,
             blurDataURL: await getBlurDataURL(src),
+            alt: "something"
         })),
     );
 

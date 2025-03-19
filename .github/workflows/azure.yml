@@ -84,8 +84,8 @@ jobs:
           file: ./influxdb/Dockerfile.prod
           push: true
           tags: |
-            ${{ env.REGISTRY }}/influx:latest
-            ${{ env.REGISTRY }}/influx:${{ github.sha }}
+            ${{ env.REGISTRY }}/influxdb:latest
+            ${{ env.REGISTRY }}/influxdb:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             INFLUXDB_TOKEN=${{ secrets.INFLUXDB_TOKEN }}
