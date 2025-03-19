@@ -1,39 +1,38 @@
-version: '3.8'
+version: "3.8"
 services:
-
   frontend:
-    image: senseiq.azurecr.io/frontend:latest
-    ports:  
+    image: rakkaranta.azurecr.io/frontend:latest
+    ports:
       - "3000:3000"
 
   backend:
-    image: senseiq.azurecr.io/backend:latest
+    image: rakkaranta.azurecr.io/backend:latest
     ports:
       - "5000:5000"
 
   mosquitto:
-    image: senseiq.azurecr.io/mosquitto:latest
+    image: rakkaranta.azurecr.io/mosquitto:latest
     restart: always
     ports:
       - 1883:1883
       - 8883:8883
       - 9001:9001
-  
+
   mosquitto-publisher:
-    image: senseiq.azurecr.io/mosquitto-publisher:latest
+    image: rakkaranta.azurecr.io/mosquitto-publisher:latest
     restart: always
 
   influxdb:
-    image: senseiq.azurecr.io/influxdb:latest
+    image: rakkaranta.azurecr.io/influxdb:latest
     restart: always
     volumes:
       - ${HOME_SITE}/influxdb/data:/var/lib/influxdb2
       - ${HOME_SITE}/influxdb/config:/etc/influxdb2
 
   telegraf:
-    image: senseiq.azurecr.io/telegraf:latest
+    image: rakkaranta.azurecr.io/telegraf:latest
     restart: always
-    ports: 
+    ports:
       - "5050:5050"
     volumes:
       - ${HOME_SITE}/telegraf/config:/etc/telegraf

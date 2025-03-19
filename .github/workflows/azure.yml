@@ -1,15 +1,14 @@
 name: Build and deploy a container to an Azure Web App
 
 env:
-  REGISTRY: senseiq.azurecr.io
+  REGISTRY: rakkaranta.azurecr.io
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
-
   build-and-push:
     runs-on: ubuntu-latest
     environment: production
@@ -67,7 +66,6 @@ jobs:
             NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID }}
             NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID }}
             NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID }}
-
 
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v4
@@ -143,6 +141,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: senseiq
-          resource-group: warehouse-safety-enhancer  # Note: it's "resource-group" not "resource-group-name"  
+          resource-group: warehouse-safety-enhancer # Note: it's "resource-group" not "resource-group-name"
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
