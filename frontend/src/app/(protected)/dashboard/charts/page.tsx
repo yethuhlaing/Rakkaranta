@@ -14,7 +14,7 @@ import { BarChartWaterLevel } from "@/components/charts/bar-chart-water-level";
 import { StepChartWaterFlow } from "@/components/charts/step-chart-water-flow";
 
 export const metadata = constructMetadata({
-    title: "Charts – SenseIQ",
+    title: "Charts – Rakkaranta",
     description: "List of charts by shadcn-ui",
 });
 

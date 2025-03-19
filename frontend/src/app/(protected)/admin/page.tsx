@@ -7,7 +7,7 @@ import InfoCard from "@/components/dashboard/info-card";
 import TransactionsList from "@/components/dashboard/transactions-list";
 
 export const metadata = constructMetadata({
-    title: "Admin – SenseIQ",
+    title: "Admin – Rakkaranta",
     description: "Admin page for only admin management.",
 });
 

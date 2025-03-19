@@ -7,7 +7,7 @@ import { DashboardHeader } from "@/components/dashboard/header";
 import { BillingInfo } from "@/components/pricing/billing-info";
 
 export const metadata = constructMetadata({
-    title: "Billing – SenseIQ",
+    title: "Billing – Rakkaranta",
     description: "Manage billing and your subscription plan.",
 });
 

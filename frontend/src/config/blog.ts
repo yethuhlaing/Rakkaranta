@@ -6,7 +6,7 @@ export const BLOG_CATEGORIES: {
     {
         title: "News",
         slug: "news",
-        description: "Updates and announcements from Next SenseIQ.",
+        description: "Updates and announcements from Next Rakkaranta.",
     },
     {
         title: "Education",

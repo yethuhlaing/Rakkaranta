@@ -140,7 +140,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: senseiq
-          resource-group: warehouse-safety-enhancer # Note: it's "resource-group" not "resource-group-name"
+          app-name: rakkaranta
+          resource-group-name: rakkaranta 
           slot-name: production
           configuration-file: ./docker-compose.prod.yml

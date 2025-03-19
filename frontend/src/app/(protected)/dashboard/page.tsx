@@ -6,7 +6,7 @@ import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import BIMViewer from "./Dashboard";
 
 export const metadata = constructMetadata({
-    title: "Dashboard – SenseIQ",
+    title: "Dashboard – Rakkaranta",
     description: "Create and manage content.",
 });
 
