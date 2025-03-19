@@ -31,7 +31,7 @@ jobs:
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
-          login-server: senseiq.azurecr.io
+          login-server: rakkaranta.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
