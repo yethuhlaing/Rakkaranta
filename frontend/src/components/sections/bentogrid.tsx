@@ -307,7 +307,7 @@ export default function BentoGrid() {
                                         Guest Experience Optimization
                                     </h2>
                                     <p className="text-muted-foreground">
-                                        Monitor your resort's occupancy and amenity usage in real-time with our advanced tracking system, ensuring optimal staffing and resource allocation.
+                                        Monitor your resort&apos;s occupancy and amenity usage in real-time with our advanced tracking system, ensuring optimal staffing and resource allocation.
                                     </p>
                                 </div>
                             </div>

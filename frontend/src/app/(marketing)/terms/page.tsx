@@ -12,7 +12,7 @@ export default function Terms() {
             and services.
             </p>
             <p className="mb-3">
-            By making a reservation or using any of Rakkaranta Resort's services, you acknowledge that you have read,
+            By making a reservation or using any of Rakkaranta Resort&apos;s services, you acknowledge that you have read,
             understood, and agree to be bound by these terms and conditions.
             </p>
         </section>

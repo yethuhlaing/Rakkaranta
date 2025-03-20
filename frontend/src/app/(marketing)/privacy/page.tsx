@@ -174,8 +174,7 @@ export default function Privacy() {
 
         <h3 className="text-xl font-medium mb-2">Right to Erasure</h3>
         <p className="mb-3">
-          In certain circumstances, you have the right to request that we delete your personal data (the "right to be
-          forgotten").
+          In certain circumstances, you have the right to request that we delete your personal data.
         </p>
 
         <h3 className="text-xl font-medium mb-2">Right to Restriction of Processing</h3>
@@ -199,7 +198,7 @@ export default function Privacy() {
 
         <h3 className="text-xl font-medium mb-2">Marketing Opt-Out</h3>
         <p className="mb-3">
-          You can opt out of receiving marketing communications at any time by clicking the "unsubscribe" link in any
+          You can opt out of receiving marketing communications at any time by clicking the &quot;unsubscribe&quot; link in any
           marketing email or by contacting us directly.
         </p>
       </section>
