@@ -47,7 +47,13 @@ export function GuageEmergency() {
                     <GaugeComponent 
                         type="semicircle"
                         arc={{
-                            colorArray: ['#F2E2FB', '#DEC2F7', '#C7A6F3','#B486ED','#9F5FE1'],
+                            colorArray: [
+                            'hsl(213, 58%, 95%)',  // Lightest blue - replaces #F2E2FB
+                            'hsl(213, 58%, 90%)',  // Light blue - replaces #DEC2F7
+                            'hsl(213, 58%, 80%)',  // Your exact light blue - replaces #C7A6F3
+                            'hsl(213, 48%, 70%)',  // Medium blue - replaces #B486ED
+                            'hsl(210, 18%, 40%)'   // Darker blue-gray - replaces #9F5FE1
+                            ],                            
                             padding: 0.02,
                             subArcs: [
                                 { limit: 40, showTick: true, tooltip: { text: 'Safe!' } },

@@ -52,31 +52,31 @@ export function GuageVibration() {
                         <GaugeComponent
                             arc={{
                                 subArcs: [
-                                {
-                                    limit: 1.6,
-                                    color: '#F2E2FB',
-                                    showTick: true
-                                },
-                                {
-                                    limit: 3.2,
-                                    color: '#DEC2F7',
-                                    showTick: true
-                                },
-                                {
-                                    limit: 4.8,
-                                    color: '#C7A6F3',
-                                    showTick: true
-                                },
-                                {
-                                    limit: 6.4,
-                                    color: '#B486ED',
-                                    showTick: true
-                                },
-                                {
-                                    limit: 8,
-                                    color: '#9F5FE1',
-                                    showTick: true
-                                },
+                                    {
+                                        limit: 1.6,
+                                        color: 'hsl(213, 58%, 95%)',  // Lightest blue - replaces #F2E2FB
+                                        showTick: true
+                                    },
+                                    {
+                                        limit: 3.2,
+                                        color: 'hsl(213, 58%, 90%)',  // Light blue - replaces #DEC2F7
+                                        showTick: true
+                                    },
+                                    {
+                                        limit: 4.8,
+                                        color: 'hsl(213, 58%, 80%)',  // Your exact light blue - replaces #C7A6F3
+                                        showTick: true
+                                    },
+                                    {
+                                        limit: 6.4,
+                                        color: 'hsl(213, 48%, 70%)',  // Medium blue - replaces #B486ED
+                                        showTick: true
+                                    },
+                                    {
+                                        limit: 8,
+                                        color: 'hsl(210, 18%, 40%)',  // Darker blue-gray - replaces #9F5FE1
+                                        showTick: true
+                                    },
                                 ]
                             }}
                             value={latestReading?.vibration ?? 0} // Fallback to 0 if lightIntensity is undefined or null

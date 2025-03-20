@@ -22,6 +22,7 @@ import {
 import ProjectSwitcher from "@/components/dashboard/project-switcher";
 import { UpgradeCard } from "@/components/dashboard/upgrade-card";
 import { Icons } from "@/components/shared/icons";
+import LogoImage from "../shared/logo-image";
 
 interface DashboardSidebarProps {
     links: SidebarNavItem[];
@@ -74,8 +75,8 @@ export function DashboardSidebar({ links }: DashboardSidebarProps) {
                     >
                         <div className="flex h-full max-h-screen flex-1 flex-col gap-2">
                             <div className="flex h-14 items-center p-4 lg:h-[60px]">
-                                {isSidebarExpanded ? <ProjectSwitcher /> : null}
-
+                                {isSidebarExpanded ? <LogoImage /> : null}
+                                
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -226,16 +227,14 @@ export function MobileSheetSidebar({ links }: DashboardSidebarProps) {
                         <div className="flex h-screen flex-col">
                             <nav className="flex flex-1 flex-col gap-y-8 p-6 text-lg font-medium">
                                 <Link
-                                    href="#"
+                                    href="/"
                                     className="flex items-center gap-2 text-lg font-semibold"
                                 >
-                                    <Icons.logo className="size-6" />
+                                    <LogoImage />
                                     <span className="font-urban text-xl font-bold">
                                         {siteConfig.name}
                                     </span>
                                 </Link>
-
-                                <ProjectSwitcher large />
 
                                 {links.map((section) => (
                                     <section

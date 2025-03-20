@@ -113,16 +113,16 @@ export function AreaChartStacked() {
                         />
                         <defs>
                             <linearGradient id="colorCo" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#FF6B6B" stopOpacity={0.8}/> {/* Bright red */}
+                                <stop offset="95%" stopColor="#FF6B6B" stopOpacity={0}/>
                             </linearGradient>
                             <linearGradient id="colorPm10" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#4ECB71" stopOpacity={0.8}/> {/* Vibrant green */}
+                                <stop offset="95%" stopColor="#4ECB71" stopOpacity={0}/>
                             </linearGradient>
                             <linearGradient id="colorNo2" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#ffc658" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#ffc658" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#FFD166" stopOpacity={0.8}/> {/* Bright yellow */}
+                                <stop offset="95%" stopColor="#FFD166" stopOpacity={0}/>
                             </linearGradient>
                         </defs>
                         <YAxis />
@@ -146,33 +146,33 @@ export function AreaChartStacked() {
                             <Area
                                 type="natural"
                                 dataKey="co"
-                                stroke="#8884d8"
+                                stroke="hsl(213, 58%, 70%)"  // Previously purple #8884d8
                                 fillOpacity={1}
                                 fill="url(#colorCo)"
                                 stackId="a"
-                                activeDot={{ stroke: 'red', strokeWidth: 2 }}
+                                activeDot={{ stroke: 'hsl(213, 58%, 80%)', strokeWidth: 2 }}
                             />
                             )}
                             {visibleAreas.pm10 && (
                             <Area
                                 type="natural"
                                 dataKey="pm10"
-                                stroke="#82ca9d"
+                                stroke="hsl(213, 58%, 80%)"
                                 fillOpacity={1}
                                 fill="url(#colorPm10)"
                                 stackId="a"
-                                activeDot={{ stroke: 'red', strokeWidth: 2 }}
+                                activeDot={{ stroke: 'hsl(213, 58%, 80%)', strokeWidth: 2 }}
                             />
                             )}
                             {visibleAreas.no2 && (
                             <Area
                                 type="natural"
                                 dataKey="no2"
-                                stroke="#ffc658"
+                                stroke="hsl(210, 18%, 40%)"
                                 fillOpacity={1}
                                 fill="url(#colorNo2)"
                                 stackId="a"
-                                activeDot={{ stroke: 'red', strokeWidth: 2 }}
+                                activeDot={{ stroke: 'hsl(213, 58%, 80%)', strokeWidth: 2 }}
                             />
                             )}
                     </AreaChart>

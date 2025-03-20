@@ -4,17 +4,19 @@ import { PlansRow, SubscriptionPlan } from "@/types";
 export const pricingData: SubscriptionPlan[] = [
     {
         title: "Starter",
-        description: "For Beginners",
+        description: "Perfect for First-Time Visitors",
         benefits: [
-            "Up to 100 monthly posts",
-            "Basic analytics and reporting",
-            "Access to standard templates",
+            "3-night stay in standard cabin",
+            "Daily sauna access (1 hour)",
+            "Complimentary firewood",
+            "Welcome drink on arrival",
+            "Access to hiking trails"
         ],
         limitations: [
-            "No priority access to new features.",
-            "Limited customer support",
-            "No custom branding",
-            "Limited access to business resources.",
+            "No hot tub access",
+            "Standard check-in/out times",
+            "Restaurant reservations subject to availability",
+            "Limited activity scheduling"
         ],
         prices: {
             monthly: 0,
@@ -27,21 +29,23 @@ export const pricingData: SubscriptionPlan[] = [
     },
     {
         title: "Pro",
-        description: "Unlock Advanced Features",
+        description: "Our Most Popular Package",
         benefits: [
-            "Up to 500 monthly posts",
-            "Advanced analytics and reporting",
-            "Access to business templates",
-            "Priority customer support",
-            "Exclusive webinars and training.",
+            "5-night stay in premium cabin",
+            "Unlimited sauna access",
+            "Private hot tub session (2 hours daily)",
+            "Northern Lights viewing tour",
+            "Daily breakfast buffet",
+            "One traditional Finnish dinner",
+            "Complimentary snowshoe rental"
         ],
         limitations: [
-            "No custom branding",
-            "Limited access to business resources.",
+            "Spa treatments at additional cost",
+            "Premium activities require reservation"
         ],
         prices: {
-            monthly: 50,
-            yearly: 480,
+            monthly: 699,
+            yearly: 6000,
         },
         stripeIds: {
             monthly: env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID,
@@ -50,18 +54,21 @@ export const pricingData: SubscriptionPlan[] = [
     },
     {
         title: "Business",
-        description: "For Power Users",
+        description: "Ultimate Finnish Experience",
         benefits: [
-            "Unlimited posts",
-            "Real-time analytics and reporting",
-            "Access to all templates, including custom branding",
-            "24/7 business customer support",
-            "Personalized onboarding and account management.",
+            "7-night stay in lakeside villa",
+            "Private sauna and hot tub",
+            "Full board dining (all meals included)",
+            "Dedicated resort host",
+            "Daily activity of choice (fishing, hiking, snowmobiling)",
+            "Exclusive Finnish cooking class",
+            "Airport transfers included",
+            "Late checkout guaranteed"
         ],
         limitations: [],
         prices: {
-            monthly: 100,
-            yearly: 960,
+            monthly: 1599,
+            yearly: 12000,
         },
         stripeIds: {
             monthly: env.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID,

@@ -2,78 +2,78 @@ import { FeatureLdg, InfoLdg, TestimonialType } from "@/types";
 
 export const infos: InfoLdg[] = [
     {
-        title: "Revolutionize Warehouse Safety",
+        title: "Enhance Resort Experience",
         description:
-        "Harness real-time analytics, 3D visualization, and predictive insights to create a safer, more efficient work environment.",
-        image: "/_static/illustrations/warehouse.png",
+        "",
+        image: "/_static/illustrations/image.png",
         list: [
             {
                 title: "Real-Time Monitoring",
                 description:
-                "Get instant alerts and actionable insights from our advanced sensor network.",
+                "Get instant alerts and insights from sauna conditions to water systems through our advanced sensor network.",
                 icon: 'Eye',
             },
             {
-                title: "AI-Driven Analytics",
+                title: "Energy Optimization",
                 description:
-                    "Leverage machine learning for predictive risk assessment and proactive safety measures.",
-                icon: 'Cpu',
-            },
-            {
-                title: "3D Warehouse Mapping",
-                description:
-                    "Navigate your facility virtually and access item details with a single tap.",
-                icon: 'TrendingUp',
-            },
-            {
-                title: "IoT Integration",
-                description:
-                "Seamlessly connect and manage all your warehouse IoT devices from a central hub.",
+                    "Leverage smart analytics to reduce energy consumption while maintaining perfect guest comfort.",
                 icon: 'Zap',
+            },
+            {
+                title: "Resort-wide Mapping",
+                description:
+                    "Navigate your facilities virtually and access real-time information on all amenities.",
+                icon: 'Map',
+            },
+            {
+                title: "Smart Resource Management",
+                description:
+                "Monitor wood storage levels, water usage, and heating systems from a central dashboard.",
+                icon: 'BarChart', 
             },
         ]
     },
     {
-        title: "Seamless Safety Integration",
+        title: "Seamless Integration for Nordic Resorts",
         description:
-          "Integrate our AI-powered warehouse safety platform effortlessly into your existing operations. Connect with your current systems and IoT devices for a comprehensive safety solution that enhances your workflow.",
-        image: "/_static/illustrations/warehouse-integration.jpg",
+          "Integrate our IoT platform effortlessly into your existing resort operations. Connect with your current systems for a comprehensive solution that enhances guest experience and operational efficiency.",
+        image: "/_static/illustrations/resort-integration.jpg",
         list: [
           {
-            title: "IoT Compatibility",
+            title: "Sauna Monitoring",
             description:
-              "Easily connect with a wide range of sensors and IoT devices for real-time monitoring.",
-            icon: 'Puzzle',
+              "Track temperature, humidity, and occupancy in sauna facilities for optimal guest experience and safety.",
+            icon: 'Thermometer',
           },
           {
-            title: "Rapid Deployment",
+            title: "Water System Management",
             description:
-              "Get up and running quickly with our streamlined setup process and expert support.",
-            icon: 'Zap',
+              "Monitor water levels, temperature, and quality in pools, hot tubs, and water supply systems.",
+            icon: 'Droplet',
           },
           {
-            title: "Data Security",
+            title: "Energy Efficiency",
             description:
-              "Ensure your sensitive data is protected with our robust encryption and compliance measures.",
-            icon: 'Shield',
+              "Reduce operational costs with smart monitoring of heating, lighting, and power consumption.",
+            icon: 'Battery',
           },
           {
-            title: "API Flexibility",
+            title: "Guest Experience Enhancement",
             description:
-              "Customize integrations with our comprehensive API to fit your unique warehouse needs.",
-            icon: 'Layers',
+              "Use occupancy data and environmental monitoring to maintain perfect comfort conditions for guests.",
+            icon: 'Heart',
           },
           {
-            title: "Workflow Automation",
+            title: "Seasonal Adaptability",
             description:
-              "Automate safety protocols and alerts to streamline your processes and reduce manual effort.",
-            icon: 'Workflow',
+              "Automatically adjust systems based on weather conditions and seasonal requirements.",
+            icon: 'Cloud',
           },
           {
-            title: "Comprehensive Documentation",
+            title: "Maintenance Alerts",
             description:
-              "Access detailed guides and API documentation for smooth implementation and maintenance.",
-            icon: 'BookOpen',
+              "Receive proactive notifications when systems require attention or maintenance.",
+            icon: 'Bell', 
           },
         ],
       }
@@ -82,90 +82,102 @@ export const infos: InfoLdg[] = [
 
 export const features: FeatureLdg[] = [
     {
-      title: "Real-Time Safety Analytics",
+      title: "Real-Time Sauna Analytics",
       description:
-        "Monitor warehouse conditions in real-time with advanced sensors, providing instant alerts and actionable insights to prevent accidents and optimize safety protocols.",
+        "Monitor sauna conditions in real-time with temperature and humidity sensors, ensuring perfect heat levels and alerting staff to maintenance needs.",
       link: "/analytics",
-      icon: "Cpu",
+      icon: "Thermometer",
     },
     {
-      title: "3D Item Mapping",
+      title: "Wood Storage Management",
       description:
-        "Navigate your warehouse virtually with our interactive 3D IFC model. Tap on items to view detailed information, improving inventory management and spatial awareness.",
-      link: "/3d-mapping",
-      icon: 'Box',
+        "Track firewood inventory levels and moisture content to ensure optimal burning conditions and timely replenishment for your resort's heating needs.",
+      link: "/wood-management",
+      icon: 'LogIn',
     },
     {
-      title: "AI-Powered Safety Assistant",
+      title: "Water System Monitoring",
       description:
-        "Interact with our intelligent chatbot or voice assistant for instant safety recommendations, equipment locations, and procedural guidance, enhancing operational efficiency.",
-      link: "/ai-assistant",
-      icon: 'BotIcon',
+        "Keep track of water temperature, levels, and flow rates in pools, hot tubs, and drinking water systems for guest comfort and safety.",
+      link: "/water-systems",
+      icon: 'Droplet',
+    },  
+    {
+      title: "Occupancy Optimization",
+      description:
+        "Use real-time occupancy data to efficiently manage staff resources, energy usage, and guest facilities throughout your resort.",
+      link: "/occupancy",
+      icon: 'Users',
     },
     {
-      title: "IoT Integration Hub",
+      title: "Predictive Maintenance",
       description:
-        "Seamlessly connect and manage all your warehouse IoT devices from a central dashboard, ensuring comprehensive safety coverage and data synchronization.",
-      link: "/iot-hub",
-      icon: 'Cpu',
+        "Leverage advanced algorithms to predict maintenance needs for sauna heaters, water systems, and climate control before failures occur.",
+      link: "/maintenance",
+      icon: 'PenTool',
     },
     {
-      title: "Predictive Risk Assessment",
+      title: "Energy Consumption Analysis",
       description:
-        "Leverage advanced machine learning algorithms to predict potential safety hazards before they occur, allowing proactive measures to maintain a secure work environment.",
-      link: "/risk-assessment",
-      icon: 'Shield',
-    },
-    {
-      title: "Multilingual Safety Insights",
-      description:
-        "Break language barriers with NLP-powered translations of sensor data and safety instructions, ensuring clear communication across your diverse workforce.",
-      link: "/multilingual",
-      icon: 'Megaphone',
+        "Visualize and optimize energy usage patterns across your resort to reduce costs while maintaining excellent guest comfort.",
+      link: "/energy",
+      icon: 'Battery',
     },
   ]
 
 export const testimonials: TestimonialType[] = [
     {
-        name: "John Doe",
-        job: "Full Stack Developer",
+        name: "Matti Virtanen",
+        job: "Resort Manager",
         image: "https://randomuser.me/api/portraits/men/1.jpg",
-        review: "The real-time analytics have revolutionized our safety protocols. We've seen a 40% reduction in workplace incidents since implementing this solution.",
+        review: "The sauna monitoring system has transformed our guest experience. Our staff receives alerts before temperature issues affect guests, and our energy costs have decreased by 30%.",
     },
     {
-        name: "Alice Smith",
-        job: "UI/UX Designer",
+        name: "Liisa Korhonen",
+        job: "Facilities Director",
         image: "https://randomuser.me/api/portraits/women/2.jpg",
-        review: "The 3D item mapping feature has dramatically improved our inventory management. We can locate items faster and optimize space utilization like never before.",
+        review: "The wood storage management feature has eliminated our supply issues. We always know exactly when to order more firewood, and the moisture tracking ensures optimal burning efficiency.",
     },
     {
-        name: "David Johnson",
-        job: "DevOps Engineer",
+        name: "Juhani Mäkinen",
+        job: "Maintenance Supervisor",
         image: "https://randomuser.me/api/portraits/men/3.jpg",
-        review: "The AI-powered safety assistant has become an indispensable tool for our team. It's like having a safety expert on call 24/7.",
+        review: "The predictive maintenance alerts have saved us countless emergency repairs. We now address issues before they become problems that affect our guests.",
     },
     {
-        name: "Michael Wilson",
-        job: "Project Manager",
-        image: "https://randomuser.me/api/portraits/men/5.jpg",
-        review: "Integrating our existing IoT devices was seamless. The centralized dashboard gives us unprecedented visibility into our warehouse operations.",
+        name: "Anna Järvinen",
+        job: "Guest Experience Manager",
+        image: "https://randomuser.me/api/portraits/women/5.jpg",
+        review: "Our guests have noticed the difference in comfort and consistency. The water temperature in our hot tubs remains perfect regardless of outdoor conditions.",
     },
     {
-        name: "Sophia Garcia",
-        job: "Data Analyst",
-        image: "https://randomuser.me/api/portraits/women/6.jpg",
-        review: "The predictive risk assessment feature has transformed how we approach warehouse insurance. It's proactive, data-driven, and incredibly accurate.",
+        name: "Pekka Niemi",
+        job: "Sustainability Officer",
+        image: "https://randomuser.me/api/portraits/men/6.jpg",
+        review: "The energy consumption analysis has been invaluable for our sustainability efforts. We've reduced our carbon footprint while actually improving guest comfort.",
     },
     {
-        name: "Emily Brown",
-        job: "Marketing Manager",
+        name: "Sari Koskinen",
+        job: "Restaurant Manager",
         image: "https://randomuser.me/api/portraits/women/4.jpg",
-        review: "The multilingual capabilities have been a game-changer for our diverse workforce. Safety instructions are now clearly understood by all, regardless of language barriers.",
+        review: "The occupancy tracking helps us perfectly time our meal preparations. We've reduced food waste by 25% while ensuring we're always ready for busy periods.",
     },
     {
-        name: "Jason Stan",
-        job: "Web Designer",
+        name: "Timo Laine",
+        job: "Owner",
         image: "https://randomuser.me/api/portraits/men/9.jpg",
-        review: "Implementing this system has not only enhanced our safety standards but also significantly improved our operational efficiency. It's been a worthwhile investment with tangible ROI.",
+        review: "Implementing this system has not only enhanced our guest experience but also significantly improved our operational efficiency. The return on investment was achieved within the first year.",
+    },
+    {
+        name: "Elena Heikkinen",
+        job: "Head of Housekeeping",
+        image: "https://randomuser.me/api/portraits/women/8.jpg",
+        review: "The cabin occupancy sensors have revolutionized our cleaning schedule. We know exactly when guests have departed and can prepare rooms efficiently without disturbing anyone who's extended their stay.",
+    },
+    {
+        name: "Mikko Lahtinen",
+        job: "Winter Activities Coordinator",
+        image: "https://randomuser.me/api/portraits/men/12.jpg",
+        review: "The weather station integration helps us plan outdoor activities with confidence. We can anticipate changing conditions and ensure guest safety while maximizing enjoyment of our winter offerings.",
     },
 ];

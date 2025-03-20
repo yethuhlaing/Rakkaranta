@@ -41,7 +41,7 @@ export async function GET(req: Request) {
                         color: paint,
                         background:
                             mode === "dark"
-                                ? "linear-gradient(90deg, #000 0%, #111 100%)"
+                                ? "linear-gradient(90deg, hsl(210, 18%, 13%), hsl(213, 58%, 80%) 80%)"
                                 : "white",
                     }}
                 >
@@ -52,7 +52,7 @@ export async function GET(req: Request) {
                             fontWeight: "normal",
                             position: "relative",
                             background:
-                                "linear-gradient(90deg, #6366f1, #a855f7 80%)",
+                                "linear-gradient(90deg, hsl(210, 18%, 13%), hsl(213, 58%, 80%) 80%)",
                             backgroundClip: "text",
                             color: "transparent",
                         }}

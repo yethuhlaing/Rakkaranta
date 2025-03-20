@@ -22,28 +22,28 @@ export default async function HeroLanding() {
                     )}
                     target="_blank"
                 >
-                    <span className="mr-3">🎉</span>
+                    <span className="mr-3">🏔️</span>
                     <span className="hidden md:flex">
                         Introducing&nbsp;
                     </span>{" "}
-                    AI Innovate Warehouse{" "}
+                    Rakkaranta Nordic Resort IoT{" "}
                 </Link>
 
                 <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
-                    Revolutionize warehouse safety with{" "}
-                    <span className="text-gradient_indigo-purple font-extrabold">
-                        Rakkaranta
-                    </span>
+                    Enhance your Nordic resort experience with{" "}
+                <span className="text-gradient_indigo-purple font-extrabold">
+                    Rakkaranta
+                </span>
                 </h1>
 
                 <p
-                    className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
-                    style={{
-                        animationDelay: "0.35s",
-                        animationFillMode: "forwards",
-                    }}
+                className="max-w-4xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+                style={{
+                    animationDelay: "0.35s",
+                    animationFillMode: "forwards",
+                }}
                 >
-                    Our cutting-edge platform provides 3D mapping, predictive risk assessment, and multilingual safety insights, ensuring a secure environment for your team and optimizing your operations.
+                    Our innovative IoT monitoring platform provides real-time sauna analytics, wood storage management, and water system monitoring, ensuring perfect comfort for your guests while optimizing energy efficiency.
                 </p>
 
                 <div

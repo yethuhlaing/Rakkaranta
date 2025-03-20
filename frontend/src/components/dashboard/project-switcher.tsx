@@ -21,14 +21,9 @@ type ProjectType = {
 
 const projects: ProjectType[] = [
     {
-        title: "Project 1",
-        slug: "Sample Project",
-        color: "bg-red-500",
-    },
-    {
-        title: "Project 2",
-        slug: "Real Project",
-        color: "bg-blue-500",
+        title: "Rakkaranta",
+        slug: "Rakkaranta",
+        color: "bg-green-500",
     },
 ];
 const selected: ProjectType = projects[0];
@@ -39,53 +34,28 @@ export default function ProjectSwitcher({
     large?: boolean;
 }) {
     const { data, status } = useSession();
-    const [openPopover, setOpenPopover] = useState(false);
-    console.log(data)
     if (!projects || status === "loading") {
         return <ProjectSwitcherPlaceholder />;
     }
 
     return (
-        <div>
-            <Popover open={openPopover} onOpenChange={setOpenPopover}>
-                <PopoverTrigger>
-                    <Button
-                        className="h-8 px-2"
-                        variant={openPopover ? "secondary" : "ghost"}
-                        onClick={() => setOpenPopover(!openPopover)}
-                    >
-                        <div className="flex items-center space-x-3 pr-2">
-                            <div
-                                className={cn(
-                                    "size-3 shrink-0 rounded-full",
-                                    selected.color,
-                                )}
-                            />
-                            <div className="flex items-center space-x-3">
-                                <span
-                                    className={cn(
-                                        "inline-block truncate text-sm font-medium xl:max-w-[120px]",
-                                        large ? "w-full" : "max-w-[80px]",
-                                    )}
-                                >
-                                    {selected.slug}
-                                </span>
-                            </div>
-                        </div>
-                        <ChevronsUpDown
-                            className="size-4 text-muted-foreground"
-                            aria-hidden="true"
-                        />
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="max-w-60 p-2">
-                    <ProjectList
-                        selected={selected}
-                        projects={projects}
-                        setOpenPopover={setOpenPopover}
-                    />
-                </PopoverContent>
-            </Popover>
+        <div className="flex items-center space-x-3 pr-2">
+            <div
+                className={cn(
+                    "size-3 shrink-0 rounded-full",
+                    selected.color,
+                )}
+            />
+            <div className="flex items-center space-x-3">
+                <span
+                    className={cn(
+                        "inline-block truncate text-sm font-medium xl:max-w-[120px]",
+                        large ? "w-full" : "max-w-[80px]",
+                    )}
+                >
+                    {selected.slug}
+                </span>
+            </div>
         </div>
     );
 }

@@ -13,35 +13,35 @@ export const siteConfig: SiteConfig = {
         twitter: "https://twitter.com/yethuhlaing",
         github: "https://github.com/",
     },
-    mailSupport: "support@Rakkaranta.com",
+    mailSupport: "support@rakkaranta.com",
 };
 
 export const footerLinks: SidebarNavItem[] = [
     {
-        title: "Company",
+        title: "Resort",
         items: [
             { title: "About", href: "#" },
-            { title: "Enterprise", href: "#" },
+            { title: "Accommodations", href: "#" },
             { title: "Terms", href: "/terms" },
             { title: "Privacy", href: "/privacy" },
         ],
     },
     {
-        title: "Product",
+        title: "Experience",
         items: [
-            { title: "Security", href: "#" },
-            { title: "Customization", href: "#" },
-            { title: "Customers", href: "#" },
-            { title: "Changelog", href: "#" },
+            { title: "Sauna", href: "#" },
+            { title: "Activities", href: "#" },
+            { title: "Dining", href: "#" },
+            { title: "Seasons", href: "#" },
         ],
     },
     {
-        title: "Docs",
+        title: "Information",
         items: [
-            { title: "Introduction", href: "#" },
-            { title: "Installation", href: "#" },
-            { title: "Components", href: "#" },
-            { title: "Code Blocks", href: "#" },
+            { title: "Location", href: "#" },
+            { title: "FAQ", href: "#" },
+            { title: "Contact", href: "#" },
+            { title: "Booking", href: "#" },
         ],
     },
 ];

@@ -105,8 +105,8 @@ const logos = [
                         y2="-.08"
                         gradientUnits="userSpaceOnUse"
                     >
-                        <stop stopColor="#62F755" />
-                        <stop offset="1" stopColor="#8FF986" stopOpacity="0" />
+                        <stop stopColor="hsl(213, 58%, 70%)" />
+                        <stop offset="1" stopColor="hsl(213, 58%, 80%)" stopOpacity="0" />
                     </linearGradient>
                     <linearGradient
                         id="b"
@@ -116,8 +116,8 @@ const logos = [
                         y2="21.494"
                         gradientUnits="userSpaceOnUse"
                     >
-                        <stop stopOpacity=".9" />
-                        <stop offset="1" stopColor="#1A1A1A" stopOpacity="0" />
+                        <stop stopColor="hsl(210, 18%, 13%)" stopOpacity=".9" />
+                        <stop offset="1" stopColor="hsl(210, 18%, 40%)" stopOpacity="0" />
                     </linearGradient>
                 </defs>
             </svg>
