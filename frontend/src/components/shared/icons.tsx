@@ -46,6 +46,8 @@ import {
     BarChart,
     Map,
     Cloud,
+    Rotate3D,
+    SlidersHorizontal,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -54,6 +56,8 @@ export const Icons = {
     TrendingUp, Users, Zap, Eye,
     Layers, Workflow, BookOpen,
     Cpu: Cpu,
+    Rotate3D,
+    SlidersHorizontal,
     Puzzle,
     Battery, PenTool, Droplet, LogIn, Thermometer, Bell, Heart, BatteryCharging, BarChart, Map,
     Shield: Shield, 

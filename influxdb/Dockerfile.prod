@@ -1,13 +1,14 @@
 FROM influxdb:2.6-alpine
 
-# Create directory structure
-RUN mkdir -p /var/lib/influxdb2 /etc/influxdb2
+# Create directories for persistent storage
+RUN mkdir -p /home/influxdb
 
 # Copy configuration files if you have any
 COPY ./config/ /etc/influxdb2/
 
 EXPOSE 8086
 # Volume mount points
-VOLUME ["/var/lib/influxdb2", "/etc/influxdb2"]
+VOLUME /home/influxdb
+
 # The entrypoint script will handle initialization
 ENTRYPOINT ["influxd"]

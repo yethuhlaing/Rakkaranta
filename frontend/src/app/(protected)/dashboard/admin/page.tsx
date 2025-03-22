@@ -13,7 +13,7 @@ export const metadata = constructMetadata({
 
 export default async function AdminPage() {
     const user = await getCurrentUser();
-    if (!user || user.role !== "ADMIN") redirect("/login");
+    if (!user) redirect("/login");
 
     return (
         <>
@@ -28,7 +28,6 @@ export default async function AdminPage() {
                     <InfoCard />
                     <InfoCard />
                 </div>
-                <TransactionsList />
                 <TransactionsList />
             </div>
         </>

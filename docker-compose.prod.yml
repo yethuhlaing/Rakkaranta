@@ -35,10 +35,7 @@ services:
     volumes:
       - ${WEBAPP_STORAGE_HOME}/influxdb/data:/var/lib/influxdb2
       - ${WEBAPP_STORAGE_HOME}/influxdb/config:/etc/influxdb2
-    environment:
-      - INFLUXDB_DB=mydatabase
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=securepassword
+
   telegraf:
     image: rakkaranta.azurecr.io/telegraf:latest
     restart: always
@@ -46,5 +43,3 @@ services:
       - "5050:5050"
     volumes:
       - ${WEBAPP_STORAGE_HOME}/telegraf/config:/etc/telegraf
-    depends_on:
-      - influxdb

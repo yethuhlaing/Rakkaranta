@@ -26,7 +26,7 @@ export default async function HeroLanding() {
                     <span className="hidden md:flex">
                         Introducing&nbsp;
                     </span>{" "}
-                    Rakkaranta Nordic Resort IoT{" "}
+                    Rakkaranta Nordic Resort{" "}
                 </Link>
 
                 <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
@@ -66,7 +66,7 @@ export default async function HeroLanding() {
                     </Link>
                     <Link
                         href='/login'
-                        target="_blank"
+                        target="_self"
                         rel="noreferrer"
                         className={cn(
                             buttonVariants({
