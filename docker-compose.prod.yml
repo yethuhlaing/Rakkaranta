@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  frontend:
+    image: rakkaranta.azurecr.io/frontend:latest
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - backend
+
+  backend:
+    image: rakkaranta.azurecr.io/backend:latest
+    ports:
+      - "5000:5000"
+    restart: always
+    depends_on:
+      - influxdb
+      - mosquitto
+
+  mosquitto:
+    image: rakkaranta.azurecr.io/mosquitto:latest
+    restart: always
+    ports:
+      - 1883:1883
+      - 8883:8883
+      - 9001:9001
+
+  mosquitto-publisher:
+    image: rakkaranta.azurecr.io/mosquitto-publisher:latest
+    restart: always
+
+  influxdb:
+    image: rakkaranta.azurecr.io/influx:latest
+    restart: always
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}/influxdb/data:/var/lib/influxdb2
+      - ${WEBAPP_STORAGE_HOME}/influxdb/config:/etc/influxdb2
+
+  telegraf:
+    image: rakkaranta.azurecr.io/telegraf:latest
+    restart: always
+    ports:
+      - "5050:5050"
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}/telegraf/config:/etc/telegraf
