@@ -55,7 +55,6 @@ export function AreaChartStacked() {
     const toggleArea = (area: keyof typeof visibleAreas) => {
         setVisibleAreas(prev => ({ ...prev, [area]: !prev[area] }))
     }
-    console.log(sensorData)
     return (
         <Card className="flex flex-col">
             <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">

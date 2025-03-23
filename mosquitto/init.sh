@@ -1,21 +1,29 @@
 #!/bin/sh
 
-# Check if the password file exists
-if [ ! -f /mosquitto/config/passwd/passwd.txt ]; then
-  echo 'Creating Mosquitto password file...'
-  
-  # Create directory if it doesn't exist
-  mkdir -p /mosquitto/config/passwd
-  
-  # Set permissions
-  chmod 0700 /mosquitto/config/passwd
-  
-  # Create the password file with the username and password from environment variables
-  mosquitto_passwd -b -c /mosquitto/config/passwd/passwd.txt $MOSQUITTO_USERNAME $MOSQUITTO_PASSWORD
-  
-  # Set proper ownership
-  chown mosquitto:mosquitto /mosquitto/config/passwd/passwd.txt
-fi
+# Get username/password from environment variables
+MQTT_USERNAME=${MQTT_USERNAME:-"yethuhlaing"}
+MQTT_PASSWORD=${MQTT_PASSWORD:-"yethuhlaing"}
 
-# Start Mosquitto
-exec mosquitto -c /mosquitto/config/mosquitto.conf
+echo "Setting up Mosquitto password file for user: $MQTT_USERNAME"
+
+# Ensure password file exists and has proper permissions
+touch /mosquitto/config/passwd
+chmod 700 /mosquitto/config/passwd
+
+# Set wide permissions to ensure we can write
+chmod -R 777 /mosquitto
+chmod 777 /mosquitto/log/mosquitto.log
+chmod 777 /mosquitto/config/passwd
+chmod 700 /mosquitto/data/mosquitto.db
+
+# Create/update the user credentials
+mosquitto_passwd -b /mosquitto/config/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD"
+
+
+echo "File permissions:"
+ls -la /mosquitto/config/passwd
+ls -la /mosquitto/log/mosquitto.log
+
+exec /usr/sbin/mosquitto -c /mosquitto/config/mosquitto.conf
+
+echo "Password file created successfully. Starting Mosquitto..."

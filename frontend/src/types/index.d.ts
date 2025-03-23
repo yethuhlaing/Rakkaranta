@@ -112,14 +112,14 @@ export type SensorData = {
     no2?: number,
     co?: number,
     pm10?: number,
-    lobby?: number,
-    storage?:  number,
+    reception?: number,
+    sauna?:  number,
+    woodshed?:  number,
+    restaurant?:  number,
     office?:  number,
-    security?:  number,
-    cafeteria?:  number,
-    inspection?:  number,
-    automation?:  number,
-    maintenance?: number
+    lakeside?:  number,
+    cottage?:  number,
+    firepit?: number
     methane?: number,
     propane?: number,
     hydrogen?: number,
@@ -158,7 +158,7 @@ export type FormattedAggregateData = {
 export const fields = [
     'temperature', 'humidity', 'co', 'no2', 'pm10', 'gas', 'emergency',
     'light-intensity', 'motion-detected', 'vibration', 'noise-level',
-    'water_level', 'storage-population', 'lobby-population', 'office-population', 'cafeteria-population', 'security-population', 'inspection-population', 'automation-population', 'maintenance-population'
+    'water_level', 'sauna-population', 'reception-population', 'woodshed-population', 'office-population', 'restaurant-population', 'lakeside-population', 'cottage-population', 'firepit-population'
 ]
 
 export type FieldType = typeof fields[number];

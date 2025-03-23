@@ -1,9 +1,9 @@
 import mqtt from 'mqtt'
 import { generateSensorData } from './data.js'
 
-const mqtt_url = process.env.MOSQUITTO_BROKER_URL || 'tcp://localhost:1883'
-const mqtt_username = process.env.MOSQUITTO_USERNAME
-const mqtt_password = process.env.MOSQUITTO_PASSWORD
+const mqtt_url = process.env.MOSQUITTO_BROKER_URL || "tcp://mosquitto:1883";
+const mqtt_username = process.env.MQTT_USERNAME
+const mqtt_password = process.env.MQTT_PASSWORD;
 
 // Constants for configuration
 const PUBLISH_INTERVAL = 5 * 1000 // 5 seconds
@@ -11,12 +11,19 @@ const MAX_RETRIES = 3
 const RETRY_DELAY = 1000 // 1 second
 const BATCH_SIZE = 100 // Number of messages to publish in one batch
 
+const options = {
+  // MQTT connection options
+  clientId: "mqtt_js_client_" + Math.random().toString(16).substr(2, 8),
+  username: mqtt_username, // Use your MQTT username
+  password: mqtt_password, // Use your MQTT password
+  clean: true, // Set to false if you want to receive missed messages when reconnecting
+  reconnectPeriod: 5000, // Try to reconnect every 5 seconds
+  connectTimeout: 30 * 1000, // Timeout period of 30 seconds
+};
+console.log(options)
 class MQTTPublisher {
     constructor() {
-        this.client = mqtt.connect(mqtt_url, {
-            username: mqtt_username,
-            password: mqtt_password
-        })
+        this.client = mqtt.connect(mqtt_url, options);
 
         this.client.on('connect', () => {
             console.log('Connected to MQTT broker')

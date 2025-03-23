@@ -36,8 +36,8 @@ export function GuageEmergency() {
     return (
         <Card className="flex flex-col">
             <CardHeader className="flex flex-col space-y-2">
-                <CardTitle>Emergency Status Indicator</CardTitle>
-                <CardDescription>Showing the tendency for fire alert</CardDescription>
+                <CardTitle>Cabin Safety Status</CardTitle>
+                <CardDescription>Fire and smoke detection monitoring across all resort accommodations</CardDescription>
             </CardHeader>
             <CardContent className="pb-0">
                 <ChartContainer

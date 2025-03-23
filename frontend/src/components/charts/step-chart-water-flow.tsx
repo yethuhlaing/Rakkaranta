@@ -48,9 +48,9 @@ export function StepChartWaterFlow() {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-between w-full items-center">
-            <div className="flex flex-col space-y-2">
-                    <CardTitle>Water Flow Analysis</CardTitle>
-                    <CardDescription>Monitoring water flow rates in real time to ensure efficient usage and leak detection (liters/min)</CardDescription>
+                <div className="flex flex-col space-y-2">
+                    <CardTitle>Hot Tub Flow</CardTitle>
+                    <CardDescription>Real-time monitoring of water circulation in hot tubs and sauna facilities (liters/min)</CardDescription>
                 </div>
                 <TimeRangeSelector field={'water-flow'} defaultTimeRange='5m' />
             </CardHeader>

@@ -6,7 +6,8 @@ export default function ChartsLoading() {
         <>
             <DashboardHeader
                 heading="Comprehensive Monitoring Dashboard"
-                text="Real Time Dashboard"
+                text="Visualize trends, compare performance, and stay informed with intuitive charts and graphs designed 
+    for actionable insights"
             />
             <div className="flex flex-col gap-5">
                 <Skeleton className="h-80 w-full rounded-lg" /> {/* LineChartTemperature */}

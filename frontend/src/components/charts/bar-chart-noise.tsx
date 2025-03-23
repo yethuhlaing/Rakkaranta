@@ -52,10 +52,10 @@ export function BarChartNoise() {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-between w-full items-center">
-                <div className="flex flex-col space-y-2">
-                    <CardTitle>Noise Level Tracking Chart</CardTitle>
-                    <CardDescription>Live noise level data across different areas to maintain operational safety and comply with noise regulations.</CardDescription>
-                </div>
+                    <div className="flex flex-col space-y-2">
+                        <CardTitle>Cabin Ambience Monitor</CardTitle>
+                        <CardDescription>Live acoustic readings from cabin areas</CardDescription>
+                    </div>
                 <TimeRangeSelector field={'noise-level'} defaultTimeRange={'5m'} />
             </CardHeader>
             <CardContent className="px-2 sm:p-6">

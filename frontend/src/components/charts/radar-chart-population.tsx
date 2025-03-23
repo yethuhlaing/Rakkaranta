@@ -43,7 +43,8 @@ export function RadarChartPopulation() {
     useEffect(() => {
         subscribe(['population']);
     }, []);
-    
+        console.log(sensorData)
+
     function getTotalPopulation(sensorData: SensorData) {
         // Extract only numeric fields and sum them up
         let total = 0;
@@ -59,7 +60,6 @@ export function RadarChartPopulation() {
     }
     const latestReading = sensorData?.population?.[sensorData?.population?.length - 1] as SensorData;
     // Calculate total population by summing all areas
-    console.log(latestReading)
     if (!latestReading) return null;
     const totalPeople = [{
         category: "Warehouse",
@@ -69,14 +69,14 @@ export function RadarChartPopulation() {
 
       // Transform the raw data for Recharts
     const chartData = latestReading ? [
-        { category: "Lobby", population: latestReading.lobby },
-        { category: "Storage", population: latestReading.storage },
+        { category: "Reception", population: latestReading.reception },
+        { category: "Sauna", population: latestReading.sauna },
+        { category: "Woodshed", population: latestReading.woodshed },
+        { category: "Restaurant", population: latestReading.restaurant },
         { category: "Office", population: latestReading.office },
-        { category: "Security", population: latestReading.security },
-        { category: "Cafeteria", population: latestReading.cafeteria },
-        { category: "Inspection", population: latestReading.inspection },
-        { category: "Automation", population: latestReading.automation },
-        { category: "Maintenance", population: latestReading.maintenance }
+        { category: "Lakeside", population: latestReading.lakeside },
+        { category: "Cottage", population: latestReading.cottage },
+        { category: "Firepit", population: latestReading.firepit }
     ] : [];
 
     return (
@@ -104,14 +104,14 @@ export function RadarChartPopulation() {
                 </CardContent>
                 <CardFooter className="flex-col gap-2 text-pretty text-center text-sm">
                     <div className="flex items-center gap-2 font-medium leading-none">
-                        Population distribution in Warehouse Zone{" "}
+                        Rakkaaranta Guest Distribution{" "}
                         <UsersRound className="size-4" />
                     </div>
                     <div className="leading-none text-muted-foreground">
                         {getCurrentDateTime()}
                     </div>
                 </CardFooter>
-            </Card>* 
+            </Card>
             <Card className="flex-1">
                 <CardContent className="pb-0">
                     <ChartContainer
@@ -181,7 +181,7 @@ export function RadarChartPopulation() {
                 </CardContent>
                 <CardFooter className="flex-col gap-2 text-pretty text-center text-sm">
                     <div className="flex items-center gap-2 font-medium leading-none">
-                        Showing total population in Warehouse {" "}
+                        Total Guest Count{" "}
                         <Footprints className="size-4" />
                     </div>
                     <div className="leading-none text-muted-foreground">

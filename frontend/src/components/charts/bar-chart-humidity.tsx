@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, Cell, XAxis, YAxis } from "recharts";
 
 import {
     Card,
@@ -21,37 +21,37 @@ import { SensorData } from "@/types";
 
 
 const chartConfig = {
-    lobby: {
-        label: "Lobby",
+    Reception: {
+        label: "Reception",
         color: "hsl(var(--chart-3))",
     },
-    storage: {
-        label: "Storage",
+    Sauna: {
+        label: "Sauna",
         color: "hsl(var(--chart-1))",
     },
-    office: {
-        label: "Office",
+    Woodshed: {
+        label: "Woodshed",
         color: "hsl(var(--chart-1))",
     },
-    security: {
-        label: "Security",
+    Restaurant: {
+        label: "Restaurant",
         color: "hsl(var(--chart-2))",
     },
-    cafeteria: {
-        label: "Cafeteria",
+    Office: {
+        label: "Office",
         color: "hsl(var(--chart-3))",
     },
-    inspection: {
-        label: "Inspection",
+    Lakeside: {
+        label: "Lakeside",
         color: "hsl(var(--chart-4))",
     },
-    automation: {
-        label: "Automation",
+    Cottage: {
+        label: "Cottage",
         color: "hsl(var(--chart-5))",
     },    
-    maintenance: {
-        label: "Maintenance",
-        color: "ff0000",
+    Firepit: {
+        label: "Firepit",
+        color: "hsl(var(--chart-2))",
     },
 } satisfies ChartConfig;
 
@@ -68,20 +68,20 @@ export function BarChartHumidity() {
 
         // Transform the raw data for Recharts
     const chartData = latestReading ? [
-        { category: "lobby", value: latestReading.lobby },
-        { category: "storage", value: latestReading.storage },
-        { category: "office", value: latestReading.office },
-        { category: "security", value: latestReading.security },
-        { category: "cafeteria", value: latestReading.cafeteria },
-        { category: "inspection", value: latestReading.inspection },
-        { category: "automation", value: latestReading.automation },
-        { category: "maintenance", value: latestReading.maintenance }
+        { category: "Reception", value: latestReading.reception },
+        { category: "Sauna", value: latestReading.sauna },
+        { category: "Woodshed", value: latestReading.woodshed },
+        { category: "Restaurant", value: latestReading.restaurant },
+        { category: "Office", value: latestReading.office },
+        { category: "Lakeside", value: latestReading.lakeside },
+        { category: "Cottage", value: latestReading.cottage },
+        { category: "Firepit", value: latestReading.firepit }
     ] : [];
     return (
         <Card className="flex flex-col">
             <CardHeader>
-                <CardTitle>Humidity Monitoring Graph</CardTitle>
-                <CardDescription>Real-time humidity levels across different areas</CardDescription>
+                <CardTitle>Sauna Humidity</CardTitle>
+                <CardDescription>Real-time humidity monitoring across traditional Finnish saunas and steam rooms</CardDescription>
             </CardHeader>
             <CardContent className="flex-1">
                 <ChartContainer config={chartConfig}>
@@ -105,12 +105,16 @@ export function BarChartHumidity() {
                                     ?.label
                             }
                         />
-                        <XAxis dataKey="value" type="number" hide />
+                        <XAxis dataKey="value" type="number" />
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
                         />
-                        <Bar dataKey="value" layout="vertical" radius={5} fill={"hsl(var(--chart-1)"} />
+                        <Bar dataKey="value" layout="vertical" radius={5} >
+                            {chartData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={chartConfig[entry.category].color} />
+                            ))}
+                        </Bar>
                     </BarChart>
                 </ChartContainer>
             </CardContent>

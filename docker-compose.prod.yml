@@ -5,17 +5,12 @@ services:
     ports:
       - "3000:3000"
     restart: always
-    depends_on:
-      - backend
 
   backend:
     image: rakkaranta.azurecr.io/backend:latest
     ports:
       - "5000:5000"
     restart: always
-    depends_on:
-      - influxdb
-      - mosquitto
 
   mosquitto:
     image: rakkaranta.azurecr.io/mosquitto:latest
@@ -35,11 +30,15 @@ services:
     volumes:
       - ${WEBAPP_STORAGE_HOME}/influxdb/data:/var/lib/influxdb2
       - ${WEBAPP_STORAGE_HOME}/influxdb/config:/etc/influxdb2
-
+    ports:
+      - "8086:8086"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8086/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
   telegraf:
     image: rakkaranta.azurecr.io/telegraf:latest
     restart: always
     ports:
       - "5050:5050"
-    volumes:
-      - ${WEBAPP_STORAGE_HOME}/telegraf/config:/etc/telegraf

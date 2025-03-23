@@ -1,6 +1,6 @@
 "use client";
 
-import { AudioWaveform } from 'lucide-react';
+import { AudioWaveform, DoorOpen } from 'lucide-react';
 import {
     Card,
     CardContent,
@@ -34,15 +34,15 @@ export function GuageVibration() {
     const latestReading = sensorData?.['vibration']?.[sensorData?.['vibration']?.length - 1] as SensorData;
     const formatVibrationValue = (value: any): string => {
         if (value !== undefined && value !== null) {
-            return value.toFixed(1) + ' m/s²';
+            return value.toFixed(1) + ' opens';
         }
         return '0'; // Default to an empty string or another fallback string
     };
     return (
         <Card className="flex flex-col">
             <CardHeader className="flex flex-col space-y-2">
-                <CardTitle>Vibration Sensor</CardTitle>
-                <CardDescription>Real-time vibration for production area</CardDescription>
+                <CardTitle>Sauna Usage Monitor</CardTitle>
+                <CardDescription>Real-time tracking of sauna door activity (opens/hour)</CardDescription>
             </CardHeader>
             <CardContent className="pb-0">
                 <ChartContainer
@@ -102,13 +102,13 @@ export function GuageVibration() {
                 </ChartContainer>
 
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-pretty text-center text-sm">
+            <CardFooter className="flex-col gap-2 text-pretty text-center text-sm mt-6">
                 <div className="flex items-center gap-2 font-medium leading-none">
-                    Measured in Meters per Second Squared (m/s²){" "}
-                    <AudioWaveform size={18}/>
+                Measured in Door Events per Hour{" "}
+                <DoorOpen size={18}/>
                 </div>
                 <div className="leading-none text-muted-foreground">
-                    Optimal Range between 1.5 m/s² and 3.0 m/s²
+                Optimal Range between 2 and 6 openings per hour
                 </div>
             </CardFooter>
         </Card>

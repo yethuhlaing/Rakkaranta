@@ -42,9 +42,9 @@ export function LineChartTemperature() {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-between w-full items-center">
-            <div className="flex flex-col space-y-2">
-                    <CardTitle>Temperature Monitoring Graph</CardTitle>
-                    <CardDescription>Real-time temperature from multiple sensors</CardDescription>
+                <div className="flex flex-col space-y-2">
+                    <CardTitle>Sauna Temperature Dashboard</CardTitle>
+                    <CardDescription>Real-time temperature monitoring across all resort saunas</CardDescription>
                 </div>
                 <TimeRangeSelector field={'temperature'} defaultTimeRange={'5m'} />
             </CardHeader>

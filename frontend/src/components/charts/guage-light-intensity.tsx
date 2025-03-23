@@ -93,9 +93,9 @@ export function GuageLightIntensity() {
                 </ChartContainer>
 
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-pretty text-center text-sm">
+            <CardFooter className="flex-col gap-2 text-pretty text-center text-sm mt-6">
                 <div className="flex items-center gap-2 font-medium leading-none">
-                    Measured in lux (lumens per square meter){" "}
+                    Measured in lux (lumens per square meter{" "}
                     <Sun size={18}/>
                 </div>
                 <div className="leading-none text-muted-foreground">

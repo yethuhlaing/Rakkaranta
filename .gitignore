@@ -36,6 +36,7 @@ frontend/.env*
 backend/.env*
 mosquitto/.env*
 telegraf/.env*
+publisher/.env*
 # Vercel deployment directory
 /.vercel
 
@@ -51,6 +52,7 @@ frontend/.next/
 frontend/out/
 mosquitto/node_modules
 influxdb/.env*
+publisher/node_modules
 
 # Optional: Ignore IDE-specific files (if not already covered)
 frontend/.vscode/
@@ -70,5 +72,5 @@ backend/*.swp
 
 
 mosquitto/log
-
+publisher/log
 influxdb/data

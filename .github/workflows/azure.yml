@@ -94,6 +94,9 @@ jobs:
             INFLUXDB_ORG=${{ secrets.INFLUXDB_ORG }}
             INFLUXDB_BUCKET=${{ secrets.INFLUXDB_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
+            INFLUXDB_INIT_MODE=${{ secrets.INFLUXDB_INIT_MODE }}
+            INFLUXDB_INIT_USERNAME=${{ secrets.INFLUXDB_INIT_USERNAME }}
+            INFLUXDB_INIT_PASSWORD=${{ secrets.INFLUXDB_INIT_PASSWORD }}
 
       - name: Build and push Mosquitto
         uses: docker/build-push-action@v4
@@ -105,12 +108,15 @@ jobs:
             ${{ env.REGISTRY }}/mosquitto:latest
             ${{ env.REGISTRY }}/mosquitto:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            MQTT_USERNAME=${{ secrets.MQTT_USERNAME }}
+            MQTT_PASSWORD=${{ secrets.MQTT_PASSWORD }}
 
       - name: Build and push Mosquitto Publisher
         uses: docker/build-push-action@v4
         with:
-          context: ./mosquitto
-          file: ./mosquitto/Dockerfile.prod
+          context: ./publisher
+          file: ./publisher/Dockerfile
           push: true
           tags: |
             ${{ env.REGISTRY }}/mosquitto-publisher:latest
@@ -136,7 +142,6 @@ jobs:
             INFLUXDB_ORG=${{ secrets.INFLUXDB_ORG }}
             INFLUXDB_BUCKET=${{ secrets.INFLUXDB_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
-            MQTT_HOST=${{ secrets.MQTT_HOST }}
             MQTT_USERNAME=${{ secrets.MQTT_USERNAME }}
             MQTT_PASSWORD=${{ secrets.MQTT_PASSWORD }}
   deploy:
@@ -157,3 +162,8 @@ jobs:
           resource-group-name: rakkaranta 
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
+
+      - name: Verify Deployment
+        run: |
+          sleep 120
+          curl -f https://rakkaranta.online/api/health || exit 1

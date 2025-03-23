@@ -3,12 +3,28 @@ FROM influxdb:2.6-alpine
 # Create directories for persistent storage
 RUN mkdir -p /home/influxdb
 
-# Copy configuration files if you have any
-COPY ./config/ /etc/influxdb2/
+# Copy configuration files if needed
+COPY ./config/influxdb.conf /etc/influxdb/influxdb.conf
 
+# Make sure directories exist
+RUN mkdir -p /etc/influxdb /var/lib/influxdb /var/log/influxdb && \
+    chown -R influxdb:influxdb /etc/influxdb /var/lib/influxdb /var/log/influxdb
+    
+# Set proper permissions
+RUN chown -R influxdb:influxdb /etc/influxdb /var/lib/influxdb
+
+# Set the correct permissions
+RUN chmod 644 /etc/influxdb/influxdb.conf
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:8086/health || exit 1
+
+# Specify user to run container (security best practice)
+USER influxdb
+
+# Expose InfluxDB port
 EXPOSE 8086
-# Volume mount points
-VOLUME /home/influxdb
 
-# The entrypoint script will handle initialization
-ENTRYPOINT ["influxd"]
+# Command to run InfluxDB with the configuration file
+CMD ["influxd"]

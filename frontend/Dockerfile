@@ -1,27 +1,23 @@
 # Frontend Dockerfile (./frontend/Dockerfile)
 FROM node:18-slim AS base
 
+# Install system dependencies - do this early as it rarely changes
+RUN apt-get update && apt-get install -y openssl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Install dependencies
+# First copy only package files and prisma - this creates a layer that only changes when dependencies change
 COPY package*.json ./
 COPY prisma ./prisma/
 
-RUN apt-get update
-RUN apt-get install -y openssl
+# Install dependencies and generate Prisma client
+RUN npm ci --legacy-peer-deps && npx prisma generate
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps
-RUN npx prisma generate
-
-# Copy application code
+# Now copy the rest of the code - this layer will change frequently
 COPY . .
 
-# Set development environment
+# Set environment variables, expose ports, and set command - these don't create new layers
 ENV NODE_ENV=development
-
-# Expose port
 EXPOSE 3000
-
-# Start development server
 CMD ["npm", "run", "dev"]

@@ -115,7 +115,7 @@ export default function TrailMap({ weatherData }: TrailMapProps) {
   const activeTrail = trails.find(trail => trail && trail.id === selectedTrail);
 
   return (
-    <div className="relative h-full w-full rounded-lg overflow-hidden border border-gray-200 ">
+    <div className="relative h-full w-full rounded-lg overflow-hidden border bg-transparent ">
       {/* Improved map background with terrain features */}
       <svg viewBox="0 0 1000 800" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
         {/* Background terrain */}
@@ -141,7 +141,7 @@ export default function TrailMap({ weatherData }: TrailMapProps) {
         </defs>
 
         {/* Base terrain */}
-        <rect x="0" y="0" width="1000" height="800" fill="#f3f4f6" />
+        <rect x="0" y="0" width="1000" height="800" fill="none" />
 
         {/* Elevation contours */}
         <ellipse
