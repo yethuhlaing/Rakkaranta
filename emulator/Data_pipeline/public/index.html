@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temperature Data</title>
+</head>
+<body>
+  <h1>Temperature Readings</h1>
+  <ul id="temp-list"></ul>
+  <script>
+    async function fetchTemperatures() {
+      const response = await fetch('http://localhost:3000/temperature');
+      const data = await response.json();
+      const list = document.getElementById('temp-list');
+      data.forEach(temp => {
+        const li = document.createElement('li');
+        li.textContent = `Temperature: ${temp}°C`;
+        list.appendChild(li);
+      });
+    }
+    fetchTemperatures();
+  </script>
+</body>
+</html>
