@@ -1,0 +1,28 @@
+FROM telegraf:latest
+
+# Create directory structure with proper permissions
+RUN mkdir -p /etc/telegraf/telegraf.d && \
+    chown -R telegraf:telegraf /etc/telegraf
+
+# Copy our custom configuration file with proper ownership
+COPY --chown=telegraf:telegraf ./config/telegraf.conf /etc/telegraf/telegraf.conf
+
+# Set the permissions
+RUN chmod 644 /etc/telegraf/telegraf.conf && \
+    chmod -R 755 /etc/telegraf
+
+# Set up healthcheck to verify Telegraf is running properly
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD pgrep telegraf || exit 1
+
+# Expose necessary port
+EXPOSE 5050
+
+# Set environment variables
+ENV TELEGRAF_CONFIG_PATH=/etc/telegraf/telegraf.conf
+
+# Switch to non-root user for security
+USER telegraf
+
+# Run Telegraf
+CMD ["telegraf", "--config", "/etc/telegraf/telegraf.conf"]
