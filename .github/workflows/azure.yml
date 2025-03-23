@@ -78,6 +78,8 @@ jobs:
             ${{ env.REGISTRY }}/backend:latest
             ${{ env.REGISTRY }}/backend:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/backend:latest
+          cache-to: type=inline
 
       - name: Build and Push InfluxDB Image
         uses: docker/build-push-action@v4
@@ -97,12 +99,14 @@ jobs:
             INFLUXDB_INIT_MODE=${{ secrets.INFLUXDB_INIT_MODE }}
             INFLUXDB_INIT_USERNAME=${{ secrets.INFLUXDB_INIT_USERNAME }}
             INFLUXDB_INIT_PASSWORD=${{ secrets.INFLUXDB_INIT_PASSWORD }}
-
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
+          cache-to: type=inline
+          
       - name: Build and push Mosquitto
         uses: docker/build-push-action@v4
         with:
           context: ./mosquitto
-          file: ./mosquitto/Dockerfile.mosquitto.prod
+          file: ./mosquitto/Dockerfile.prod
           push: true
           tags: |
             ${{ env.REGISTRY }}/mosquitto:latest
