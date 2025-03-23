@@ -7,16 +7,10 @@ import { AlertTriangle, Home, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Error({
-    error,
     reset,
 }: {
-    error: Error & { digest?: string }
     reset: () => void
 }) {
-    useEffect(() => {
-        // Log the error to an error reporting service
-        console.error(error)
-    }, [error])
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-background text-center">

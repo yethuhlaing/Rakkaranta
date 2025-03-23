@@ -1,0 +1,22 @@
+bolt-path: /var/lib/influxdb2/influxd.bolt
+engine-path: /var/lib/influxdb2/engine
+http-bind-address: :8086
+log-level: info
+reporting-disabled: false
+storage-retention-check-interval: 4h0m0s
+ui-disabled: false
+
+# If you want to enable HTTPS, uncomment these lines and provide cert/key paths
+# tls-cert: /etc/ssl/influxdb-cert.pem
+# tls-key: /etc/ssl/influxdb-key.pem
+# tls-strict-ciphers: true
+
+# Settings for query memory usage
+query-concurrency: 10
+query-queue-size: 10
+query-initial-memory-bytes: 10485760 # 10MB
+query-memory-bytes: 53687091200 # 50GB
+
+# Rate limiting settings
+rate-limit: 0
+readonly: false

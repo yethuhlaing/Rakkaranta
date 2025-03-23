@@ -1,24 +1,21 @@
 FROM influxdb:2.6-alpine
 
 # Create directories for persistent storage
-RUN mkdir -p /home/influxdb
+RUN mkdir -p /home/influxdb/data
 
 # Copy configuration files if needed
-COPY ./config/influxdb.conf /etc/influxdb/influxdb.conf
+COPY ./config/config.yml /etc/influxdb2/config.yml
 
-# Make sure directories exist
-RUN mkdir -p /etc/influxdb /var/lib/influxdb /var/log/influxdb && \
-    chown -R influxdb:influxdb /etc/influxdb /var/lib/influxdb /var/log/influxdb
-    
+# Set environment variables for configuration
+ENV INFLUXDB_CONFIG_PATH=/etc/influxdb2/config.yml \
+    INFLUXDB_ENGINE_PATH=/var/lib/influxdb2/engine \
+    INFLUXDB_BOLT_PATH=/var/lib/influxdb2/influxd.bolt
+
 # Set proper permissions
-RUN chown -R influxdb:influxdb /etc/influxdb /var/lib/influxdb
+RUN chmod 644 /etc/influxdb2/config.yml && \
+    chown influxdb:influxdb /etc/influxdb2/config.yml
 
-# Set the correct permissions
-RUN chmod 644 /etc/influxdb/influxdb.conf
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:8086/health || exit 1
 
 # Specify user to run container (security best practice)
 USER influxdb
