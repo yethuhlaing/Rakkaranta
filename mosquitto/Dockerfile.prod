@@ -1,23 +1,18 @@
 FROM eclipse-mosquitto:2.0
 
-# Create a non-root user for running Mosquitto
-RUN addgroup --system --gid 1883 mosquitto && \
-    adduser --system --uid 1883 --gid 1883 --no-create-home mosquitto
-
-# Create directories with proper permissions
-RUN mkdir -p /mosquitto/config /mosquitto/data /mosquitto/log && \
-    chown -R mosquitto:mosquitto /mosquitto && \
-    chmod -R 755 /mosquitto
+# Create directories if they don't exist
+RUN mkdir -p /mosquitto/config /mosquitto/data /mosquitto/log
 
 # Copy configuration
-COPY --chown=mosquitto:mosquitto ./config/mosquitto.conf /mosquitto/config/mosquitto.conf
-COPY --chown=mosquitto:mosquitto ./init.sh /init.sh
+COPY ./config/mosquitto.conf /mosquitto/config/mosquitto.conf
+COPY ./init.sh /init.sh
 
 # Make the initialization script executable
 RUN chmod +x /init.sh
 
-# Set up password file with proper permissions
-RUN touch /mosquitto/config/passwd && \
+# Set proper ownership for all Mosquitto directories and files
+RUN chown -R mosquitto:mosquitto /mosquitto && \
+    touch /mosquitto/config/passwd && \
     chown mosquitto:mosquitto /mosquitto/config/passwd && \
     chmod 600 /mosquitto/config/passwd
 
@@ -28,7 +23,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 # Expose MQTT and WebSocket ports
 EXPOSE 1883 9001
 
-# Switch to non-root user for security
+# Switch to mosquitto user for security
 USER mosquitto
 
 # Set environment variables
