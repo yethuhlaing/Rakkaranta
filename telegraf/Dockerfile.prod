@@ -1,9 +1,5 @@
 FROM telegraf:latest
 
-# Create a non-root user for running Telegraf
-RUN addgroup --system --gid 5050 telegraf && \
-    adduser --system --uid 5050 --gid 5050 --no-create-home telegraf
-
 # Create directory structure with proper permissions
 RUN mkdir -p /etc/telegraf/telegraf.d && \
     chown -R telegraf:telegraf /etc/telegraf
