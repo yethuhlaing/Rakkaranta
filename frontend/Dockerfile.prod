@@ -27,24 +27,21 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy the entire node_modules directory to ensure all dependencies are available
-COPY --from=builder /app/node_modules ./node_modules
-
-# Copy the schema.prisma file from root level
-COPY --from=builder /app/prisma/schema.prisma ./prisma/schema.prisma
-
-# Copy package.json and package-lock.json
+# Copy necessary files from the builder stage
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/package-lock.json ./package-lock.json 
 
-
-# Copy Next.js build output
+# Copy the standalone directory and required Next.js files
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+
+# Copy Prisma files for database access
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/prisma ./prisma
 
 # Expose the port
 EXPOSE 3000
 
 # Start the app using the standalone server
-CMD ["node", "server.js"]
+CMD ["node", ".next/standalone/server.js"]
