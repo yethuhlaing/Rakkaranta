@@ -257,7 +257,7 @@ export default function DashboardPage() {
               </TooltipProvider>
             </CardTitle>
             <CardDescription>
-              <div>Tonight's viewing probability:{" "}</div>
+              <div>Tonight&apos;s viewing probability:{" "}</div>
               {loading ? (
                 <Skeleton className="inline-block h-4 w-16" />
               ) : (

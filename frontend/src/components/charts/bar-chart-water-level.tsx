@@ -48,7 +48,7 @@ export function BarChartWaterLevel() {
             <CardHeader className="flex flex-row justify-between w-full items-center">
                 <div className="flex flex-col space-y-2">
                     <CardTitle>Lake & Well Water Levels</CardTitle>
-                    <CardDescription>Current water levels in resort's natural swimming areas and drinking water reserves</CardDescription>
+                    <CardDescription>Current water levels in resort&apos;s natural swimming areas and drinking water reserves</CardDescription>
                 </div>
                 <TimeRangeSelector field={'water-level'} defaultTimeRange='5m' />
             </CardHeader>
