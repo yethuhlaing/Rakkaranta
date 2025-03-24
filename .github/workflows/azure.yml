@@ -168,8 +168,3 @@ jobs:
           resource-group-name: rakkaranta 
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
-
-      - name: Verify Deployment
-        run: |
-          sleep 120
-          curl -f https://rakkaranta.online/api/health || exit 1

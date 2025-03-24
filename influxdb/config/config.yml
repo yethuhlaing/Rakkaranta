@@ -11,6 +11,18 @@ ui-disabled: false
 # tls-key: /etc/ssl/influxdb-key.pem
 # tls-strict-ciphers: true
 
+# Authorization settings
+auth-enabled: true
+session-length: 60  # Session length in minutes
+session-renew-disabled: false
+initial-user:
+  password: "${INFLUXDB_INIT_PASSWORD}"
+  org: "${INFLUXDB_ORG}"
+  bucket: "${INFLUXDB_BUCKET}"
+  username: "${INFLUXDB_INIT_USERNAME}"
+  token: "${INFLUXDB_TOKEN}"
+
+
 # Settings for query memory usage
 query-concurrency: 10
 query-queue-size: 10
