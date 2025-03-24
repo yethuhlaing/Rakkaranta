@@ -97,8 +97,8 @@ jobs:
             DOCKER_INFLUXDB_INIT_MODE=${{ secrets.DOCKER_INFLUXDB_INIT_MODE }}
             DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
             DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
-          cache-to: type=inline
+          # cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
+          # cache-to: type=inline
 
       - name: Build and push Mosquitto
         uses: docker/build-push-action@v4

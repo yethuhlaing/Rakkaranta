@@ -1,47 +1,27 @@
-# Stage 1: Building the code
+# Stage 1: Build
 FROM node:18-alpine AS builder
-
 WORKDIR /app
-
-# Copy package.json and package-lock.json
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the code
+RUN npm ci
 COPY . .
-
-# Generate Prisma client - specify the schema path if it's at root level
 RUN npx prisma generate
+RUN npm run build
 
-# Build the app with explicit production flag
-RUN NODE_ENV=production npm run build
-
-# Stage 2: Run the built app
+# Stage 2: Production
 FROM node:18-alpine AS runner
-
 WORKDIR /app
-
-# Set environment variables explicitly
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy necessary files from the builder stage
+# Copy necessary files from build stage
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
 
-# Copy the standalone directory and required Next.js files
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-# Copy Prisma files for database access
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/prisma ./prisma
-
-# Expose the port
+# Set the correct port
+ENV PORT=3000
 EXPOSE 3000
 
-# Start the app using the standalone server
-CMD ["node", "server.js"]
+# Start the app in production mode
+CMD ["node", ".next/standalone/server.js"]

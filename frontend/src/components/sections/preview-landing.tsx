@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
-import whiteThumbnail from "@/assets/images/landing-light.png"
-import darkThumbnail from "@/assets/images/landing-black.png"
+import whiteThumbnail from "../../../public/_static/illustrations/landing-light.png"
+import darkThumbnail from "../../../public/_static/illustrations/landing-black.png"
 import { HeroVideoDialog } from "../ui/hero-video-dialog";
 
 export default function PreviewLanding() {
