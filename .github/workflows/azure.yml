@@ -148,8 +148,10 @@ jobs:
             INFLUXDB_ORG=${{ secrets.INFLUXDB_ORG }}
             INFLUXDB_BUCKET=${{ secrets.INFLUXDB_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
-            MQTT_USERNAME=${{ secrets.MQTT_USERNAME }}
-            MQTT_PASSWORD=${{ secrets.MQTT_PASSWORD }}
+            INFLUXDB_INIT_USERNAME=${{ secrets.INFLUXDB_INIT_USERNAME }}
+            INFLUXDB_INIT_PASSWORD=${{ secrets.INFLUXDB_INIT_PASSWORD }}
+            INFLUXDB_INIT_MODE=${{ secrets.INFLUXDB_INIT_MODE}}
+
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push

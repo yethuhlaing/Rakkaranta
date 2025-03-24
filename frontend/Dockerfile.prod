@@ -6,8 +6,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --legac
+# Install dependencies (only production dependencies for the build)
+RUN npm ci --only=production
 
 # Copy the rest of the code
 COPY . .
@@ -15,31 +15,28 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
-# Build Contentlayer
+# Build application for production
 RUN npm run build
+RUN npm run postbuild
 
 # Stage 2: Run the built app
 FROM node:18-alpine AS runner
 
 WORKDIR /app
 
-# Copy built assets from the builder stage
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/.next/standalone ./
-
 # Set environment variables
 ENV NODE_ENV production
 
-# Install only production dependencies
-RUN npm ci --only=production
+# Copy necessary files from builder
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/prisma ./prisma
 
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Start the app
+# Start the app using the production server
 CMD ["node", "server.js"]
-

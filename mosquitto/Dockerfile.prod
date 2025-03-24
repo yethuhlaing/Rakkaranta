@@ -11,20 +11,20 @@ COPY ./init.sh /init.sh
 RUN chmod +x /init.sh
 
 # Set proper ownership for all Mosquitto directories and files
-RUN chown -R mosquitto:mosquitto /mosquitto && \
+RUN chown -R root:root /mosquitto && \
     touch /mosquitto/config/passwd && \
-    chown mosquitto:mosquitto /mosquitto/config/passwd && \
+    chown root:root /mosquitto/config/passwd && \
     chmod 600 /mosquitto/config/passwd
 
 # Health check to verify the MQTT broker is running
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
     CMD pgrep mosquitto || exit 1
-
+    
 # Expose MQTT and WebSocket ports
-EXPOSE 1883 9001
+EXPOSE 1883 9001 8883
 
-# Switch to mosquitto user for security
-USER mosquitto
+# Run as root (note: this is not recommended for production)
+USER root
 
 # Set environment variables
 ENV MOSQUITTO_CONFIG_FILE=/mosquitto/config/mosquitto.conf

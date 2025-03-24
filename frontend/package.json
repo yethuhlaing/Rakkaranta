@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node .next/standalone/server.js",
+    "start": "next start",
     "lint": "next lint",
     "webhook": "stripe listen --forward-to localhost:4242/webhook",
     "postinstall": "prisma generate",

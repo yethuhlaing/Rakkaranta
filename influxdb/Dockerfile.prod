@@ -15,8 +15,6 @@ ENV INFLUXDB_CONFIG_PATH=/etc/influxdb2/config.yml \
 RUN chmod 644 /etc/influxdb2/config.yml && \
     chown influxdb:influxdb /etc/influxdb2/config.yml
 
-
-
 # Specify user to run container (security best practice)
 USER influxdb
 
