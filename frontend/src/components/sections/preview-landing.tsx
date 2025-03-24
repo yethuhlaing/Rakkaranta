@@ -1,21 +1,29 @@
 import Image from "next/image";
 
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
+import whiteThumbnail from "@/assets/images/landing-light.png"
+import darkThumbnail from "@/assets/images/landing-black.png"
+import { HeroVideoDialog } from "../ui/hero-video-dialog";
 
 export default function PreviewLanding() {
     return (
         <div className="pb-6 sm:pb-16">
             <MaxWidthWrapper>
-                <div className="rounded-xl md:bg-muted/30 md:p-3.5 md:ring-1 md:ring-inset md:ring-border">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border md:rounded-lg">
-                        <iframe
-                            width="100%"
-                            height="100%"
-                            src="https://www.youtube.com/embed/6-fNOPSlbbs"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                        ></iframe>
-                    </div>
+                <div className="relative">
+                    <HeroVideoDialog
+                        className="block dark:hidden"
+                        animationStyle="from-center"
+                        videoSrc={process.env.PRODUCT_DEMO_LINK || "https://www.youtube.com/embed/uqiTF6tvMRA"}
+                        thumbnailSrc={whiteThumbnail}
+                        thumbnailAlt="Hero Video"
+                    />
+                    <HeroVideoDialog
+                        className="hidden dark:block"
+                        animationStyle="from-center"
+                        videoSrc={process.env.PRODUCT_DEMO_LINK || "https://www.youtube.com/embed/uqiTF6tvMRA"}
+                        thumbnailSrc={darkThumbnail}
+                        thumbnailAlt="Hero Video"
+                    />
                 </div>
             </MaxWidthWrapper>
         </div>

@@ -1,25 +1,20 @@
-FROM influxdb:2.6-alpine
+FROM influxdb:latest
 
-# Create directories for persistent storage
-RUN mkdir -p /home/influxdb/data
+# For Azure App Service compatibility
+ENV PORT=8086
 
-# Copy configuration files if needed
-COPY ./config/config.yml /etc/influxdb2/config.yml
+# Create directories for persistence
+# Azure App Service provides persistent storage at /home
+RUN mkdir -p /home/influxdb2/data /home/influxdb2/config
+RUN ln -s /home/influxdb2/data /var/lib/influxdb2
+RUN ln -s /home/influxdb2/config /etc/influxdb2
 
-# Set environment variables for configuration
-ENV INFLUXDB_CONFIG_PATH=/etc/influxdb2/config.yml \
-    INFLUXDB_ENGINE_PATH=/var/lib/influxdb2/engine \
-    INFLUXDB_BOLT_PATH=/var/lib/influxdb2/influxd.bolt
+# Add startup script
+COPY init.sh /init.sh
+RUN chmod +x /init.sh
 
-# Set proper permissions
-RUN chmod 644 /etc/influxdb2/config.yml && \
-    chown influxdb:influxdb /etc/influxdb2/config.yml
-
-# Specify user to run container (security best practice)
-USER influxdb
-
-# Expose InfluxDB port
+# Expose InfluxDB API port
 EXPOSE 8086
 
-# Command to run InfluxDB with the configuration file
-CMD ["influxd"]
+# Start InfluxDB with the startup script
+CMD ["/init.sh"]

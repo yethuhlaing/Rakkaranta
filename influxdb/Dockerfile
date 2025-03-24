@@ -1,11 +1,14 @@
-FROM influxdb:2.6-alpine
+FROM influxdb:latest
 
+# For Azure App Service compatibility
+ENV PORT=8086
 
-# Copy configuration files if needed
-COPY ./config/config.yml /etc/influxdb2/config.yml
+# Add startup script
+COPY init.sh /init.sh
+RUN chmod +x /init.sh
 
-# Expose InfluxDB port
+# Expose InfluxDB API port
 EXPOSE 8086
 
-# Command to run InfluxDB with the configuration file
-CMD ["influxd"]
+# Start InfluxDB with the startup script
+CMD ["/init.sh"]

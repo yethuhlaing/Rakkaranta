@@ -90,13 +90,13 @@ jobs:
             ${{ env.REGISTRY }}/influxdb:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            INFLUXDB_TOKEN=${{ secrets.INFLUXDB_TOKEN }}
-            INFLUXDB_ORG=${{ secrets.INFLUXDB_ORG }}
-            INFLUXDB_BUCKET=${{ secrets.INFLUXDB_BUCKET }}
+            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
+            DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
+            DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
-            INFLUXDB_INIT_MODE=${{ secrets.INFLUXDB_INIT_MODE }}
-            INFLUXDB_INIT_USERNAME=${{ secrets.INFLUXDB_INIT_USERNAME }}
-            INFLUXDB_INIT_PASSWORD=${{ secrets.INFLUXDB_INIT_PASSWORD }}
+            DOCKER_INFLUXDB_INIT_MODE=${{ secrets.DOCKER_INFLUXDB_INIT_MODE }}
+            DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
+            DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
           cache-to: type=inline
 
@@ -140,13 +140,13 @@ jobs:
             ${{ env.REGISTRY }}/telegraf:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            INFLUXDB_TOKEN=${{ secrets.INFLUXDB_TOKEN }}
-            INFLUXDB_ORG=${{ secrets.INFLUXDB_ORG }}
-            INFLUXDB_BUCKET=${{ secrets.INFLUXDB_BUCKET }}
+            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
+            DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
+            DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
-            INFLUXDB_INIT_USERNAME=${{ secrets.INFLUXDB_INIT_USERNAME }}
-            INFLUXDB_INIT_PASSWORD=${{ secrets.INFLUXDB_INIT_PASSWORD }}
-            INFLUXDB_INIT_MODE=${{ secrets.INFLUXDB_INIT_MODE}}
+            DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
+            DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
+            DOCKER_INFLUXDB_INIT_MODE=${{ secrets.DOCKER_INFLUXDB_INIT_MODE}}
 
   deploy:
     runs-on: ubuntu-latest
@@ -163,6 +163,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: rakkaranta
-          resource-group-name: rakkaranta 
+          resource-group-name: rakkaranta
           slot-name: production
           configuration-file: ./docker-compose.prod.yml

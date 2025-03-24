@@ -13,15 +13,14 @@ ui-disabled: false
 
 # Authorization settings
 auth-enabled: true
-session-length: 60  # Session length in minutes
+session-length: 60 # Session length in minutes
 session-renew-disabled: false
 initial-user:
-  password: "${INFLUXDB_INIT_PASSWORD}"
-  org: "${INFLUXDB_ORG}"
-  bucket: "${INFLUXDB_BUCKET}"
-  username: "${INFLUXDB_INIT_USERNAME}"
-  token: "${INFLUXDB_TOKEN}"
-
+  password: "${DOCKER_INFLUXDB_INIT_PASSWORD}"
+  org: "${DOCKER_INFLUXDB_INIT_ORG}"
+  bucket: "${DOCKER_INFLUXDB_INIT_BUCKET}"
+  username: "${DOCKER_INFLUXDB_INIT_USERNAME}"
+  token: "${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}"
 
 # Settings for query memory usage
 query-concurrency: 10
