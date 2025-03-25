@@ -1,9 +1,12 @@
+"use client"
+
 import Link from "next/link";
 
 import { env } from "@/env.mjs";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 
 export default async function HeroLanding() {
 
@@ -64,23 +67,15 @@ export default async function HeroLanding() {
                         <span>Go Pricing</span>
                         <Icons.arrowRight className="size-4" />
                     </Link>
-                    <Link
-                        href='/login'
-                        target="_self"
-                        rel="noreferrer"
-                        className={cn(
-                            buttonVariants({
-                                variant: "outline",
-                                size: "lg",
-                                rounded: "full",
-                            }),
-                            "px-5",
-                        )}
+                    <Button
+                        variant="outline"
+                        size="lg"
+                        rounded="full"
                     >
-                        <p>
+                        <LoginLink postLoginRedirectURL={process.env.KINDE_POST_LOGIN_REDIRECT_URL}>
                             Get Started{" "}
-                        </p>
-                    </Link>
+                        </LoginLink>
+                    </Button>
                 </div>
             </div>
         </section>

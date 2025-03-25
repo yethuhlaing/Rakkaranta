@@ -10,11 +10,11 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BillingFormButton } from "@/components/forms/billing-form-button";
-import { ModalContext } from "@/components/modals/providers";
 import { HeaderSection } from "@/components/shared/header-section";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { siteConfig } from "@/config/site";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 
 interface PricingCardsProps {
     userId?: string;
@@ -28,7 +28,6 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
             ? true
             : false;
     const [isYearly, setIsYearly] = useState<boolean>(!!isYearlyDefault);
-    const { setShowSignInModal } = useContext(ModalContext);
     const toggleBilling = () => {
         setIsYearly(!isYearly);
     };
@@ -129,10 +128,12 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                                     ? "default"
                                     : "outline"
                             }
+                            size="lg"
                             rounded="full"
-                            onClick={() => setShowSignInModal(true)}
                         >
-                            Sign in
+                            <LoginLink postLoginRedirectURL={process.env.KINDE_POST_LOGIN_REDIRECT_URL}>
+                                Sign in{" "}
+                            </LoginLink>
                         </Button>
                     )}
                 </div>

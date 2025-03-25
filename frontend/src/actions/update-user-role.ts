@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { UserRole } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
 import { userRoleSchema } from "@/lib/zod";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export type FormData = {
     role: UserRole;
@@ -13,9 +13,11 @@ export type FormData = {
 
 export async function updateUserRole(userId: string, data: FormData) {
     try {
-        const session = await auth();
 
-        if (!session?.user || session?.user.id !== userId) {
+        const { getUser } = getKindeServerSession()
+        const user = await getUser();
+
+        if (!user || user.id !== userId) {
             throw new Error("Unauthorized");
         }
 

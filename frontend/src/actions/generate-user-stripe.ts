@@ -1,12 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+
 
 import { stripe } from "@/lib/stripe";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { absoluteUrl } from "@/lib/utils";
 import { env } from "@/env.mjs";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export type responseAction = {
     status: "success" | "error";
@@ -22,8 +23,8 @@ export async function generateUserStripe(
     let redirectUrl: string = "";
 
     try {
-        const session = await auth();
-        const user = session?.user;
+        const { getUser } = getKindeServerSession()
+        const user = await getUser();
 
         if (!user || !user.email || !user.id) {
             throw new Error("Unauthorized");

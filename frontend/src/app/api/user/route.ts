@@ -1,21 +1,24 @@
-import { auth } from "@/auth";
+
 
 import prisma from "@/lib/prisma";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
-export const DELETE = auth(async (req: any) => {
-    if (!req.auth) {
+export const DELETE = async (req: any) => {
+    const { isAuthenticated, getUser }= useKindeBrowserClient()
+    const user = getUser()
+
+    if (!isAuthenticated) {
         return new Response("Not authenticated", { status: 401 });
     }
 
-    const currentUser = req.auth.user;
-    if (!currentUser) {
+    if (!user) {
         return new Response("Invalid user", { status: 401 });
     }
 
     try {
         await prisma.user.delete({
             where: {
-                id: currentUser.id,
+                id: user.id,
             },
         });
     } catch (error) {
@@ -24,4 +27,4 @@ export const DELETE = auth(async (req: any) => {
     }
 
     return new Response("User deleted successfully!", { status: 200 });
-});
+}

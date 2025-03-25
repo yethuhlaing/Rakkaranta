@@ -3,7 +3,6 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 import { docsConfig } from "@/config/docs";
 import { marketingConfig } from "@/config/marketing";
@@ -13,10 +12,10 @@ import { useScroll } from "@/hooks/use-scroll";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DocsSearch } from "@/components/docs/search";
-import { ModalContext } from "@/components/modals/providers";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import LogoImage from "../shared/logo-image";
+import { LoginLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 interface NavBarProps {
     scroll?: boolean;
@@ -25,8 +24,9 @@ interface NavBarProps {
 
 export function NavBar({ scroll = false }: NavBarProps) {
     const scrolled = useScroll(50);
-    const { data: session, status } = useSession();
-    const { setShowSignInModal } = useContext(ModalContext);
+
+    const { getUser, isAuthenticated } = useKindeBrowserClient()
+    const user = getUser()
 
     const selectedLayout = useSelectedLayoutSegment();
     const documentation = selectedLayout === "docs";
@@ -106,13 +106,9 @@ export function NavBar({ scroll = false }: NavBarProps) {
                         </div>
                     ) : null}
 
-                    {session ? (
+                    {user ? (
                         <Link
-                            href={
-                                session.user.role === "ADMIN"
-                                    ? "/admin"
-                                    : "/dashboard"
-                            }
+                            href={"/dashboard"}
                             className="hidden md:block"
                         >
                             <Button
@@ -124,15 +120,16 @@ export function NavBar({ scroll = false }: NavBarProps) {
                                 <span>Dashboard</span>
                             </Button>
                         </Link>
-                    ) : status === "unauthenticated" ? (
+                    ) : !isAuthenticated ? (
                         <Button
                             className="hidden gap-2 px-5 md:flex"
                             variant="default"
                             size="sm"
                             rounded="full"
-                            onClick={() => setShowSignInModal(true)}
                         >
-                            <span>Sign In</span>
+                            <LoginLink postLoginRedirectURL={process.env.KINDE_POST_LOGIN_REDIRECT_URL}>
+                                Sign In
+                            </LoginLink>
                             <Icons.arrowRight className="size-4" />
                         </Button>
                     ) : (

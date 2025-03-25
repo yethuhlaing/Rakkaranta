@@ -45,8 +45,6 @@ ENV NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID=$NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID
 ENV NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=$NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID
 ENV NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=$NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID
 
-ENV NEXT_TELEMETRY_DISABLED 1
-
 # Make sure you have the standalone output configured in next.config.js
 RUN npx prisma generate
 RUN npm run build
@@ -55,8 +53,6 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-
-ENV NEXT_TELEMETRY_DISABLED 1
 
 # Copy necessary files for Prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma

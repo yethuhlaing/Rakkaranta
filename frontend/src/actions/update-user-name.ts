@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import prisma from "@/lib/prisma";
 import { userNameSchema } from "@/lib/zod";
-import { auth } from "@/auth";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export type FormData = {
     name: string;
@@ -12,9 +12,9 @@ export type FormData = {
 
 export async function updateUserName(userId: string, data: FormData) {
     try {
-        const session = await auth();
+        const { isAuthenticated } = getKindeServerSession()
 
-        if (!session?.user || session?.user.id !== userId) {
+        if (!isAuthenticated) {
             throw new Error("Unauthorized");
         }
 

@@ -6,7 +6,6 @@ import { ThemeProvider } from "next-themes";
 import NextAuthProvider from "@/lib/provider";
 import { cn, constructMetadata } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
-import ModalProvider from "@/components/modals/providers";
 
 interface RootLayoutProps {
     children: React.ReactNode;
@@ -34,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                         enableSystem
                         disableTransitionOnChange
                     >
-                        <ModalProvider>{children}</ModalProvider>
+                        {children}
                         <Toaster richColors closeButton />
                     </ThemeProvider>
                 </NextAuthProvider>
