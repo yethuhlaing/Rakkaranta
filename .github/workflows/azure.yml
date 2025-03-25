@@ -44,6 +44,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
+          file: ./frontend/Dockerfile.prod
           push: true
           tags: |
             ${{ env.REGISTRY }}/frontend:latest

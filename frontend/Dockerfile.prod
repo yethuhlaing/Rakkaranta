@@ -28,4 +28,4 @@ EXPOSE 3000
 
 # Start the app in production mode
 # The server.js file is at the root level in standalone mode
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
