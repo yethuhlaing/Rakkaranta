@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:20-alpine AS builder
+FROM node:20 AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -48,9 +48,6 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Install OpenSSL libraries required by Prisma
-RUN apk add --no-cache openssl1.1-compat
-
 # Copy necessary files for Prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/prisma ./prisma
@@ -66,4 +63,4 @@ EXPOSE 3000
 
 # Start the app in production mode
 # The server.js file is at the root level in standalone mode
-CMD ["node", "server.js"]
+CMD ["node", "server.js"] 
