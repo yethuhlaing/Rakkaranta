@@ -48,8 +48,8 @@ ENV NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=$NEXT_PUBLIC_STRIPE_BUSINESS_YEAR
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Make sure you have the standalone output configured in next.config.js
-RUN npm run build
 RUN npx prisma generate
+RUN npm run build
 
 # Stage 3: Production
 FROM node:20-alpine AS runner
