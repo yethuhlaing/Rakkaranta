@@ -59,7 +59,6 @@ jobs:
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             EMAIL_FROM=${{ secrets.EMAIL_FROM }}
-            SENDGRID_API=${{ secrets.SENDGRID_API }}
             STRIPE_API_KEY=${{ secrets.STRIPE_API_KEY }}
             STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
             NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}

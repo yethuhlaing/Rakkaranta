@@ -13,7 +13,6 @@ export const env = createEnv({
         DATABASE_URL: z.string().min(1),
         RESEND_API_KEY: z.string().min(1),
         EMAIL_FROM: z.string().min(1),
-        SENDGRID_API: z.string().min(1),
         STRIPE_API_KEY: z.string().min(1),
         STRIPE_WEBHOOK_SECRET: z.string().min(1),
     },
@@ -33,7 +32,6 @@ export const env = createEnv({
         NEXTAUTH_GITHUB_SECRET:process.env.NEXTAUTH_GITHUB_SECRET,
         DATABASE_URL: process.env.DATABASE_URL,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
-        SENDGRID_API: process.env.SENDGRID_API,
         EMAIL_FROM: process.env.EMAIL_FROM,
         // Stripe
         STRIPE_API_KEY: process.env.STRIPE_API_KEY,
