@@ -5,6 +5,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npx prisma generate
+RUN printenv
 # Make sure you have the standalone output configured in next.config.js
 RUN npm run build
 
