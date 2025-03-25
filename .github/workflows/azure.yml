@@ -67,6 +67,8 @@ jobs:
             NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID }}
             NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID }}
             OPENWEATHER_API_KEY=${{secrets.OPENWEATHER_API_KEY}}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/frontend:latest
+          cache-to: type=inline
 
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v4
@@ -78,6 +80,8 @@ jobs:
             ${{ env.REGISTRY }}/backend:latest
             ${{ env.REGISTRY }}/backend:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/backend:latest
+          cache-to: type=inline
 
       - name: Build and Push InfluxDB Image
         uses: docker/build-push-action@v4
@@ -97,8 +101,8 @@ jobs:
             DOCKER_INFLUXDB_INIT_MODE=${{ secrets.DOCKER_INFLUXDB_INIT_MODE }}
             DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
             DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
-          # cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
-          # cache-to: type=inline
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
+          cache-to: type=inline
 
       - name: Build and push Mosquitto
         uses: docker/build-push-action@v4
