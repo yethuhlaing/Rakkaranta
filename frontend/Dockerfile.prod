@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npx prisma generate
 # Make sure you have the standalone output configured in next.config.js
@@ -28,4 +28,4 @@ EXPOSE 3000
 
 # Start the app in production mode
 # The server.js file is at the root level in standalone mode
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
