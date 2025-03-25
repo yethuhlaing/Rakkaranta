@@ -11,4 +11,4 @@ RUN chmod +x /init.sh
 EXPOSE 8086
 
 # Start InfluxDB with the startup script
-CMD ["/init.sh"]
+ENTRYPOINT [ "/init.sh" ]
