@@ -9,12 +9,9 @@ RUN mkdir -p /home/influxdb2/data /home/influxdb2/config
 RUN ln -s /home/influxdb2/data /var/lib/influxdb2
 RUN ln -s /home/influxdb2/config /etc/influxdb2
 
-# Add startup script
-COPY init.sh /init.sh
-RUN chmod +x /init.sh
 
 # Expose InfluxDB API port
 EXPOSE 8086
 
 # Start InfluxDB with the startup script
-CMD ["/init.sh"]
+CMD ["influxd"]

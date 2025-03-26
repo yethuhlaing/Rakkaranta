@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
-import { getCurrentUser } from "@/lib/session";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { constructMetadata } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { BillingInfo } from "@/components/pricing/billing-info";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const metadata = constructMetadata({
     title: "Billing – Rakkaranta",
@@ -12,9 +12,11 @@ export const metadata = constructMetadata({
 });
 
 export default async function BillingPage() {
-    const user = await getCurrentUser();
-
     let userSubscriptionPlan;
+
+    const { getUser } = getKindeServerSession()
+    const user = await getUser()
+
     if (user && user.id) {
         userSubscriptionPlan = await getUserSubscriptionPlan(user.id);
     } else {

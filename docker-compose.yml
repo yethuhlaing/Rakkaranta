@@ -115,7 +115,7 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      # - ./influxdb/data:/var/lib/influxdb2
+      - ./influxdb/data:/var/lib/influxdb2
       - ./influxdb/config:/etc/influxdb2
     env_file:
       - ./influxdb/.env

@@ -13,14 +13,14 @@ export default function PreviewLanding() {
                     <HeroVideoDialog
                         className="block dark:hidden"
                         animationStyle="from-center"
-                        videoSrc={process.env.PRODUCT_DEMO_LINK || "https://www.youtube.com/embed/uqiTF6tvMRA"}
+                        videoSrc={process.env.PRODUCT_DEMO_LINK || "https://www.youtube.com/embed/o8TD4SVxuME"}
                         thumbnailSrc={whiteThumbnail}
                         thumbnailAlt="Hero Video"
                     />
                     <HeroVideoDialog
                         className="hidden dark:block"
                         animationStyle="from-center"
-                        videoSrc={process.env.PRODUCT_DEMO_LINK || "https://www.youtube.com/embed/uqiTF6tvMRA"}
+                        videoSrc={process.env.PRODUCT_DEMO_LINK || "https://www.youtube.com/embed/o8TD4SVxuME"}
                         thumbnailSrc={darkThumbnail}
                         thumbnailAlt="Hero Video"
                     />
