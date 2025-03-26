@@ -73,7 +73,7 @@ jobs:
             KINDE_SITE_URL=${{ secrets.KINDE_SITE_URL}}
             KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
             KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
-            
+            NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/frontend:latest
           cache-to: type=inline
 
