@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { useSession } from "next-auth/react";
 
 import { docsConfig } from "@/config/docs";
 import { marketingConfig } from "@/config/marketing";
@@ -14,9 +13,12 @@ import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
 import { Icons } from "@/components/shared/icons";
 
 import { ModeToggle } from "./mode-toggle";
+import { LoginLink, RegisterLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 export function NavMobile() {
-    const { data: session } = useSession();
+    const { getUser } = useKindeBrowserClient()
+    const user = getUser()
+    
     const [open, setOpen] = useState(false);
     const selectedLayout = useSelectedLayoutSegment();
     const documentation = selectedLayout === "docs";
@@ -75,24 +77,11 @@ export function NavMobile() {
                             </li>
                         ))}
 
-                    {session ? (
+                    {user ? (
                         <>
-                            {session.user.role === "ADMIN" ? (
-                                <li className="py-3">
-                                    <Link
-                                        href="/admin"
-                                        onClick={() => setOpen(false)}
-                                        className="flex w-full font-medium capitalize"
-                                    >
-                                        Admin
-                                    </Link>
-                                </li>
-                            ) : null}
-
                             <li className="py-3">
                                 <Link
                                     href="/dashboard"
-                                    onClick={() => setOpen(false)}
                                     className="flex w-full font-medium capitalize"
                                 >
                                     Dashboard
@@ -101,24 +90,17 @@ export function NavMobile() {
                         </>
                     ) : (
                         <>
-                            <li className="py-3">
-                                <Link
-                                    href="/login"
-                                    onClick={() => setOpen(false)}
-                                    className="flex w-full font-medium capitalize"
-                                >
-                                    Login
-                                </Link>
+                        
+                            <li className="py-3 flex w-full font-medium capitalize">
+                                <LoginLink postLoginRedirectURL={process.env.KINDE_POST_LOGIN_REDIRECT_URL}> 
+                                    Login in
+                                </LoginLink>
                             </li>
 
-                            <li className="py-3">
-                                <Link
-                                    href="/register"
-                                    onClick={() => setOpen(false)}
-                                    className="flex w-full font-medium capitalize"
-                                >
+                            <li className="py-3 flex w-full font-medium capitalize">
+                                <RegisterLink>
                                     Sign up
-                                </Link>
+                                </RegisterLink>
                             </li>
                         </>
                     )}

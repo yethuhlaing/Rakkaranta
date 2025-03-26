@@ -11,10 +11,6 @@ COPY --chown=telegraf:telegraf ./config/telegraf.conf /etc/telegraf/telegraf.con
 RUN chmod 644 /etc/telegraf/telegraf.conf && \
     chmod -R 755 /etc/telegraf
 
-# Set up healthcheck to verify Telegraf is running properly
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD pgrep telegraf || exit 1
-
 # Expose necessary port
 EXPOSE 5050
 

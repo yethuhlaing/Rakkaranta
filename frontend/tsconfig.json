@@ -14,6 +14,7 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
+        "types": ["node", "@prisma/client"],
         "baseUrl": ".",
         "paths": {
             "@/*": ["./src/*"]
@@ -29,6 +30,6 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        ".next/types/**/*.ts", "next.config.js"],
+        ".next/types/**/*.ts", "next.config.js", "src/app/api/auth/[kindeAuth]/route.js", "src/middleware.js"],
     "exclude": ["node_modules"]
 }

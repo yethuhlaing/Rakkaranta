@@ -2,10 +2,10 @@ import { InfluxDB, Point } from "@influxdata/influxdb-client";
 
 const QUERY_DURATION = "1d";
 
-const token = process.env.INFLUXDB_TOKEN;
+const token = process.env.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN;
 const influx_url = process.env.INFLUXDB_URL;
-const org = process.env.INFLUXDB_ORG;
-const bucket = process.env.INFLUXDB_BUCKET;
+const org = process.env.DOCKER_INFLUXDB_INIT_ORG;
+const bucket = process.env.DOCKER_INFLUXDB_INIT_BUCKET;
 
 const influxDB = new InfluxDB({
   url: influx_url,

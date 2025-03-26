@@ -14,7 +14,7 @@ RUN chmod +x /init.sh
 RUN chown -R root:root /mosquitto && \
     touch /mosquitto/config/passwd && \
     chown root:root /mosquitto/config/passwd && \
-    chmod 600 /mosquitto/config/passwd
+    chmod 700 /mosquitto/config/passwd
 
 # Expose MQTT and WebSocket ports
 EXPOSE 1883 9001 8883
