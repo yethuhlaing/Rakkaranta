@@ -25,6 +25,7 @@ function DeleteAccountModal({
 
     const { getUser} = useKindeBrowserClient()
     const user = getUser()
+    const fullName = user?.given_name + user?.family_name
 
     const [deleting, setDeleting] = useState(false);
     async function deleteAccount() {
@@ -64,7 +65,7 @@ function DeleteAccountModal({
             <div className="flex flex-col items-center justify-center space-y-3 border-b p-4 pt-8 sm:px-16">
                 <UserAvatar
                     user={{
-                        name: user?.given_name! + user?.family_name! || null,
+                        name: fullName || null,
                         image: user?.picture || null,
                     }}
                 />

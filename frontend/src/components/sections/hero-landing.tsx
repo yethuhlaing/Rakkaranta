@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 
-import { env } from "@/env.mjs";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 
-export default async function HeroLanding() {
+export default function HeroLanding() {
 
     return (
         <section className="space-y-6 py-12 sm:py-20 lg:py-20">
