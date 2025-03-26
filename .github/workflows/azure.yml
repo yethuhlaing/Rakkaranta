@@ -67,6 +67,13 @@ jobs:
             NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID }}
             NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID }}
             OPENWEATHER_API_KEY=${{secrets.OPENWEATHER_API_KEY}}
+            KINDE_CLIENT_ID=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_CLIENT_SECRET=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_ISSUER_URL=${{ secrets.KINDE_ISSUER_URL}}
+            KINDE_SITE_URL=${{ secrets.KINDE_SITE_URL}}
+            KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
+            KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
+            
           cache-from: type=registry,ref=${{ env.REGISTRY }}/frontend:latest
           cache-to: type=inline
 
