@@ -19,6 +19,7 @@ import {
   Fish,
   CloudRain, CloudSnow, CloudFog, CloudLightning, CloudSun,
   Scissors,
+  MapPin,
 } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -119,6 +120,17 @@ export default function DashboardPage() {
                 text="Welcome to your personalized resort experience"
             />
             <div className="flex items-center gap-2">
+                {weatherData && (
+                  <Badge variant="outline" className="ml-2 flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    <div>
+                      Hyrynsalmi, Finland
+                    </div>
+                    <div className="text-xs ml-1 opacity-70">
+                      ({weatherData.lat.toFixed(2)}°N, {weatherData.lon.toFixed(2)}°E)
+                    </div>
+                  </Badge>
+                )}
                 <Tabs defaultValue="today" className="w-[300px]" onValueChange={setSelectedDate}>
                 <TabsList className="grid grid-cols-3">
                     <TabsTrigger value="today">Today</TabsTrigger>
@@ -126,9 +138,9 @@ export default function DashboardPage() {
                     <TabsTrigger value="week">Week</TabsTrigger>
                 </TabsList>
                 </Tabs>
+
             </div>
         </div>
-
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Current Conditions Card */}

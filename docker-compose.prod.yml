@@ -19,15 +19,9 @@ services:
       - "1883:1883"
       - "9001:9001"
 
-  # mosquitto-publisher:
-  #   image: rakkaranta.azurecr.io/mosquitto-publisher:latest
-  #   restart: always
-
-  influxdb:
-    image: rakkaranta.azurecr.io/influx:latest
+  mosquitto-publisher:
+    image: rakkaranta.azurecr.io/mosquitto-publisher:latest
     restart: always
-    ports:
-      - "8086:8086"
 
   telegraf:
     image: rakkaranta.azurecr.io/telegraf:latest

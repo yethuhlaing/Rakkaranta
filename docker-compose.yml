@@ -70,7 +70,6 @@ services:
             - node_modules/
     depends_on:
       - mosquitto
-      - influxdb
 
   mosquitto:
     container_name: rakkaranta-mosquitto
@@ -106,19 +105,19 @@ services:
         - action: rebuild
           path: ./publisher/package.json
 
-  influxdb:
-    container_name: rakkaranta-influxdb
-    build:
-      context: ./influxdb
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    ports:
-      - "8086:8086"
-    volumes:
-      - ./influxdb/data:/var/lib/influxdb2
-      - ./influxdb/config:/etc/influxdb2
-    env_file:
-      - ./influxdb/.env
+  # influxdb:
+  #   container_name: rakkaranta-influxdb
+  #   build:
+  #     context: ./influxdb
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8086:8086"
+  #   volumes:
+  #     - ./influxdb/data:/var/lib/influxdb2
+  #     - ./influxdb/config:/etc/influxdb2
+  #   env_file:
+  #     - ./influxdb/.env
 
   telegraf:
     container_name: rakkaranta-telegraf
@@ -133,7 +132,6 @@ services:
     volumes:
       - ./telegraf/config:/etc/telegraf
     depends_on:
-      - influxdb
       - mosquitto
     develop:
       watch:

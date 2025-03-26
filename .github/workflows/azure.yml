@@ -90,27 +90,6 @@ jobs:
           cache-from: type=registry,ref=${{ env.REGISTRY }}/backend:latest
           cache-to: type=inline
 
-      - name: Build and Push InfluxDB Image
-        uses: docker/build-push-action@v4
-        with:
-          context: ./influxdb
-          file: ./influxdb/Dockerfile.prod
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/influxdb:latest
-            ${{ env.REGISTRY }}/influxdb:${{ github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
-            DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
-            DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
-            INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
-            DOCKER_INFLUXDB_INIT_MODE=${{ secrets.DOCKER_INFLUXDB_INIT_MODE }}
-            DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
-            DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/influxdb:latest
-          cache-to: type=inline
-
       - name: Build and push Mosquitto
         uses: docker/build-push-action@v4
         with:

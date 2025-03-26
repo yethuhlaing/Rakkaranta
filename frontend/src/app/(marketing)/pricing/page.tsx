@@ -1,6 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import { getCurrentUser } from "@/lib/session";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { constructMetadata } from "@/lib/utils";
