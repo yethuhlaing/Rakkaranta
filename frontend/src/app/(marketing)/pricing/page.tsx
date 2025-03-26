@@ -1,9 +1,9 @@
-import { getCurrentUser } from "@/lib/session";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { constructMetadata } from "@/lib/utils";
 import { ComparePlans } from "@/components/pricing/compare-plans";
 import { PricingCards } from "@/components/pricing/pricing-cards";
 import { PricingFaq } from "@/components/pricing/pricing-faq";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const metadata = constructMetadata({
     title: "Pricing – SenseIQ",
@@ -11,8 +11,9 @@ export const metadata = constructMetadata({
 });
 
 export default async function PricingPage() {
-    const user = await getCurrentUser();
 
+    const { getUser } = getKindeServerSession()
+    const user = await getUser()
 
     let subscriptionPlan;
     if (user && user.id) {

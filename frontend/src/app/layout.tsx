@@ -2,8 +2,6 @@ import "@/styles/globals.css";
 
 import { fontGeist, fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { ThemeProvider } from "next-themes";
-
-import NextAuthProvider from "@/lib/provider";
 import { cn, constructMetadata } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -26,17 +24,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     fontGeist.variable,
                 )}
             >
-                <NextAuthProvider>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        {children}
-                        <Toaster richColors closeButton />
-                    </ThemeProvider>
-                </NextAuthProvider>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    {children}
+                    <Toaster richColors closeButton />
+                </ThemeProvider>
             </body>
         </html>
     );
