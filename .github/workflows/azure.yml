@@ -4,9 +4,9 @@ env:
   REGISTRY: rakkaranta.azurecr.io
 
 on:
-  pull_request:
-    branches: ["main"]
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-push:
@@ -156,3 +156,11 @@ jobs:
           resource-group-name: rakkaranta
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
+
+      - name: ✅ Show Web App URL
+        run: echo "Deployed to: https://${{ steps.deploy-to-azure.outputs.webapp-url }}"
+  
+      - name: 🧪 Post-Deploy Health Check
+        run: |
+          echo "Checking health endpoint..."
+          curl -f https://rakkaranta.online/api/health || exit 1
