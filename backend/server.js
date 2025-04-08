@@ -158,6 +158,10 @@ app.get('/api/realtime/', (req, res) => {
     res.send('WebSocket server is running. Connect to ws://localhost:5000/api/realtime/sensors');
 });
 
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
+
 const PORT = 5000
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
