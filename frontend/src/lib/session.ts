@@ -1,13 +1,13 @@
 import "server-only";
 
 import { cache } from "react";
-import { auth } from "@/auth";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const getCurrentUser = cache(async () => {
-    const session = await auth()
-    console.log(session)
-    if (!session?.user) {
+    const { getUser } = getKindeServerSession()
+    const user = await getUser()
+    if (!user) {
         return undefined;
     }
-    return session.user;
+    return user;
 });

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
-import { useSession } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -33,10 +32,6 @@ export default function ProjectSwitcher({
 }: {
     large?: boolean;
 }) {
-    const { data, status } = useSession();
-    if (!projects || status === "loading") {
-        return <ProjectSwitcherPlaceholder />;
-    }
 
     return (
         <div className="flex items-center space-x-3 pr-2">

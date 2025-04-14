@@ -15,7 +15,8 @@ export const metadata = constructMetadata({
 export default async function SettingsPage() {
     const user = await getCurrentUser();
 
-    if (!user?.id) redirect("/login");
+    if (!user?.id) redirect("/api/auth/login");
+    const fullName = `${user?.given_name} ${user?.family_name}`;
 
     return (
         <>
@@ -24,8 +25,8 @@ export default async function SettingsPage() {
                 text="Manage account and website settings."
             />
             <div className="divide-y divide-muted pb-10">
-                <UserNameForm user={{ id: user.id, name: user.name || "" }} />
-                <UserRoleForm user={{ id: user.id, role: user.role }} />
+                <UserNameForm user={{ id: user.id, name: fullName || "" }} />
+                {/* <UserRoleForm user={{ id: user.id, role: user.role }} /> */}
                 <DeleteAccountSection />
             </div>
         </>

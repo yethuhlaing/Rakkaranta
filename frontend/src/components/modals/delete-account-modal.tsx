@@ -7,13 +7,13 @@ import {
     useMemo,
     useState,
 } from "react";
-import { signOut, useSession } from "next-auth/react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { UserAvatar } from "@/components/shared/user-avatar";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { toast } from "sonner";
 
 function DeleteAccountModal({
     showDeleteAccountModal,
@@ -22,33 +22,38 @@ function DeleteAccountModal({
     showDeleteAccountModal: boolean;
     setShowDeleteAccountModal: Dispatch<SetStateAction<boolean>>;
 }) {
-    const { data: session } = useSession();
-    const [deleting, setDeleting] = useState(false);
 
+    const { getUser} = useKindeBrowserClient()
+    const user = getUser()
+    const fullName = user?.given_name + user?.family_name
+
+    const [deleting, setDeleting] = useState(false);
     async function deleteAccount() {
         setDeleting(true);
-        await fetch(`/api/user`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(async (res) => {
-            if (res.status === 200) {
-                // delay to allow for the route change to complete
-                await new Promise((resolve) =>
-                    setTimeout(() => {
-                        signOut({
-                            callbackUrl: `${window.location.origin}/`,
-                        });
-                        resolve(null);
-                    }, 500),
-                );
-            } else {
-                setDeleting(false);
-                const error = await res.text();
-                throw error;
-            }
-        });
+        setDeleting(false);
+
+        // await fetch(`/api/user`, {
+        //     method: "DELETE",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        // }).then(async (res) => {
+        //     if (res.status === 200) {
+        //         // delay to allow for the route change to complete
+        //         await new Promise((resolve) =>
+        //             setTimeout(() => {
+        //                 signOut({
+        //                     callbackUrl: `${window.location.origin}/`,
+        //                 });
+        //                 resolve(null);
+        //             }, 500),
+        //         );
+        //     } else {
+        //         setDeleting(false);
+        //         const error = await res.text();
+        //         throw error;
+        //     }
+        // });
     }
 
     return (
@@ -60,8 +65,8 @@ function DeleteAccountModal({
             <div className="flex flex-col items-center justify-center space-y-3 border-b p-4 pt-8 sm:px-16">
                 <UserAvatar
                     user={{
-                        name: session?.user?.name || null,
-                        image: session?.user?.image || null,
+                        name: fullName || null,
+                        image: user?.picture || null,
                     }}
                 />
                 <h3 className="text-lg font-semibold">Delete Account</h3>
@@ -76,11 +81,20 @@ function DeleteAccountModal({
             <form
                 onSubmit={async (e) => {
                     e.preventDefault();
-                    toast.promise(deleteAccount(), {
-                        loading: "Deleting account...",
-                        success: "Account deleted successfully!",
-                        error: (err) => err,
+                    toast("Deleting account...",{
+                        description: "Please wait while we process your request.",
                     });
+            
+                    try {
+                        await deleteAccount();
+                        toast("Success",{
+                            description: "Account deleted successfully!",
+                        });
+                    } catch (err: any) {
+                        toast("Error", {
+                            description: err?.message || "Something went wrong.",
+                        });
+                    }
                 }}
                 className="flex flex-col space-y-6 bg-accent px-4 py-8 text-left sm:px-16"
             >

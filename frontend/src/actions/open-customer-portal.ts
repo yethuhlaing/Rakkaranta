@@ -1,10 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export type responseAction = {
     status: "success" | "error";
@@ -19,9 +19,9 @@ export async function openCustomerPortal(
     let redirectUrl: string = "";
 
     try {
-        const session = await auth();
+        const { getUser, isAuthenticated } = getKindeServerSession()
 
-        if (!session?.user || !session?.user.email) {
+        if (!isAuthenticated) {
             throw new Error("Unauthorized");
         }
 

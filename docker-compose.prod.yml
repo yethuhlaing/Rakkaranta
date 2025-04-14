@@ -16,27 +16,13 @@ services:
     image: rakkaranta.azurecr.io/mosquitto:latest
     restart: always
     ports:
-      - 1883:1883
-      - 8883:8883
-      - 9001:9001
+      - "1883:1883"
+      - "9001:9001"
 
   mosquitto-publisher:
     image: rakkaranta.azurecr.io/mosquitto-publisher:latest
     restart: always
 
-  influxdb:
-    image: rakkaranta.azurecr.io/influx:latest
-    restart: always
-    volumes:
-      - ${WEBAPP_STORAGE_HOME}/influxdb/data:/var/lib/influxdb2
-      - ${WEBAPP_STORAGE_HOME}/influxdb/config:/etc/influxdb2
-    ports:
-      - "8086:8086"
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8086/health"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
   telegraf:
     image: rakkaranta.azurecr.io/telegraf:latest
     restart: always
