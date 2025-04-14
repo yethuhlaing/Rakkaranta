@@ -85,3 +85,6 @@ The program (`datarelationships.py`) processes data, performs analyses, and rend
 - **SciPy**: Mode calculation.
 - **Plotly**: Interactive charts.
 - **Streamlit**: Web dashboard.
+
+## How to run
+- streamlit run DATAanalyze.py
