@@ -60,6 +60,7 @@
     "cmdk": "^1.0.0",
     "concurrently": "^8.2.2",
     "date-fns": "^3.6.0",
+    "framer-motion": "^12.9.2",
     "lucide-react": "^0.414.0",
     "mdast-util-toc": "^7.1.0",
     "ms": "^2.1.3",
