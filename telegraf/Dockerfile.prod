@@ -17,8 +17,15 @@ EXPOSE 5050
 # Set environment variables
 ENV TELEGRAF_CONFIG_PATH=/etc/telegraf/telegraf.conf
 
-# Switch to non-root user for security
-USER telegraf
+# Create a non-root user
+RUN addgroup --system --gid 1001 appgroup && \
+    adduser --system --uid 1001 --gid 1001 appuser
+
+# Set permissions for the application files
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user
+USER appuser
 
 # Run Telegraf
 CMD ["telegraf", "--config", "/etc/telegraf/telegraf.conf"]

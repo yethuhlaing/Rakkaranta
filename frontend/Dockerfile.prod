@@ -75,6 +75,16 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
+# Create a non-root user
+RUN addgroup --system --gid 1001 appgroup && \
+    adduser --system --uid 1001 --gid 1001 appuser
+
+# Set permissions for the application files
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user
+USER appuser
+
 EXPOSE 3000
 
 # Start the app in production mode
