@@ -18,8 +18,8 @@ EXPOSE 5050
 ENV TELEGRAF_CONFIG_PATH=/etc/telegraf/telegraf.conf
 
 # Create a non-root user
-RUN addgroup --system --gid 1001 appgroup && \
-    adduser --system --uid 1001 --gid 1001 appuser
+RUN addgroup -S -g 1001 appgroup && \
+    adduser -S -u 1001 -G appgroup appuser
 
 # Set permissions for the application files
 RUN chown -R appuser:appgroup /app
