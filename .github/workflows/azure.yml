@@ -7,9 +7,9 @@ env:
   REGISTRY: rakkaranta.azurecr.io
 
 on:
-  pull_request:
-    branches: ["main"]
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   security-scan:
@@ -143,6 +143,7 @@ jobs:
         with:
           context: ./frontend
           file: ./frontend/Dockerfile.prod
+          file: ./frontend/Dockerfile.prod
           push: true
           tags: |
             ${{ env.REGISTRY }}/frontend:latest
@@ -165,6 +166,13 @@ jobs:
             NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID }}
             NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID }}
             OPENWEATHER_API_KEY=${{secrets.OPENWEATHER_API_KEY}}
+            KINDE_CLIENT_ID=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_CLIENT_SECRET=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_ISSUER_URL=${{ secrets.KINDE_ISSUER_URL}}
+            KINDE_SITE_URL=${{ secrets.KINDE_SITE_URL}}
+            KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
+            KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
+            NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
             KINDE_CLIENT_ID=${{ secrets.KINDE_CLIENT_ID}}
             KINDE_CLIENT_SECRET=${{ secrets.KINDE_CLIENT_ID}}
             KINDE_ISSUER_URL=${{ secrets.KINDE_ISSUER_URL}}
@@ -294,6 +302,9 @@ jobs:
             DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
             DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
             DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
+            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
+            DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
+            DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
             DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
             DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
@@ -356,6 +367,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: rakkaranta
+          resource-group-name: rakkaranta
           resource-group-name: rakkaranta
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
