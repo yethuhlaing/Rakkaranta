@@ -12,15 +12,17 @@ const WRITE_INTERVAL = 5 * 1000; // 5 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
 const BATCH_SIZE = 100; // Number of points to write in one batch
+const WRITE_INTERVAL = 5 * 1000; // 5 seconds
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // 1 second
+const BATCH_SIZE = 100; // Number of points to write in one batch
 
 class InfluxWriter {
   constructor() {
     this.influxDB = new InfluxDB({
       url: influx_url,
       token,
-      transportOptions: {
-        gzipThreshold: 1,
-      },
+      transportOptions: {gzipThreshold: 1},
       debug: process.env.NODE_ENV === "development",
     });
 
@@ -59,9 +61,7 @@ class InfluxWriter {
       this.lastWrite = new Date();
 
       console.log(
-        `Successfully wrote ${
-          points.length
-        } points to InfluxDB at ${this.lastWrite.toISOString()}`
+        `Successfully wrote ${points.length} points to InfluxDB at ${this.lastWrite.toISOString()}`
       );
       console.log(
         `Total writes: ${this.writeCount}, Total errors: ${this.errorCount}`
@@ -70,10 +70,7 @@ class InfluxWriter {
       return true;
     } catch (error) {
       this.errorCount++;
-      console.error(
-        `Error writing to InfluxDB (attempt ${retryCount + 1}/${MAX_RETRIES}):`,
-        error.message
-      );
+      console.error(`Error writing to InfluxDB (attempt ${retryCount + 1}/${MAX_RETRIES}):`,error.message);
 
       if (retryCount < MAX_RETRIES) {
         console.log(`Retrying in ${RETRY_DELAY}ms...`);
@@ -103,11 +100,30 @@ class InfluxWriter {
       // Schedule next write using setTimeout
       this.writeInterval = setTimeout(scheduleNextWrite, WRITE_INTERVAL);
     };
+    const scheduleNextWrite = async () => {
+      if (!this.isRunning) return;
+
+      await this.writeDataWithRetry();
+
+      // Schedule next write using setTimeout
+      this.writeInterval = setTimeout(scheduleNextWrite, WRITE_INTERVAL);
+    };
 
     // Start the first write
     scheduleNextWrite();
   }
+    // Start the first write
+    scheduleNextWrite();
+  }
 
+  async stop() {
+    console.log("Stopping InfluxDB writer...");
+    this.isRunning = false;
+
+    if (this.writeInterval) {
+      clearTimeout(this.writeInterval);
+      this.writeInterval = null;
+    }
   async stop() {
     console.log("Stopping InfluxDB writer...");
     this.isRunning = false;
@@ -136,7 +152,34 @@ class InfluxWriter {
       throw error;
     }
   }
+    try {
+      await this.writeApi.flush();
+      await this.writeApi.close();
+      console.log("Successfully closed InfluxDB connection");
 
+      // Log final statistics
+      console.log(`Final statistics:`);
+      console.log(`- Total successful writes: ${this.writeCount}`);
+      console.log(`- Total errors: ${this.errorCount}`);
+      console.log(
+        `- Last successful write: ${
+          this.lastWrite ? this.lastWrite.toISOString() : "never"
+        }`
+      );
+    } catch (error) {
+      console.error("Error while closing InfluxDB connection:", error);
+      throw error;
+    }
+  }
+
+  getStats() {
+    return {
+      writeCount: this.writeCount,
+      errorCount: this.errorCount,
+      lastWrite: this.lastWrite,
+      isRunning: this.isRunning,
+    };
+  }
   getStats() {
     return {
       writeCount: this.writeCount,
@@ -149,9 +192,19 @@ class InfluxWriter {
 
 // Create writer instance
 const writer = new InfluxWriter();
+const writer = new InfluxWriter();
 
 // Handle process termination
 async function handleShutdown(signal) {
+  console.log(`Received ${signal} signal`);
+  try {
+    await writer.stop();
+    console.log("Graceful shutdown completed");
+    process.exit(0);
+  } catch (error) {
+    console.error("Error during shutdown:", error);
+    process.exit(1);
+  }
   console.log(`Received ${signal} signal`);
   try {
     await writer.stop();
@@ -174,11 +227,27 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled rejection at:", promise, "reason:", reason);
   handleShutdown("unhandledRejection");
 });
+process.on("SIGINT", () => handleShutdown("SIGINT"));
+process.on("SIGTERM", () => handleShutdown("SIGTERM"));
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught exception:", error);
+  handleShutdown("uncaughtException");
+});
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled rejection at:", promise, "reason:", reason);
+  handleShutdown("unhandledRejection");
+});
 
 // Start the writer
 writer.start().catch((error) => {
   console.error("Failed to start writer:", error);
   process.exit(1);
 });
+writer.start().catch((error) => {
+  console.error("Failed to start writer:", error);
+  process.exit(1);
+});
+
+console.log("Dummy InfluxDB writer started. Press Ctrl+C to stop.");
 
 console.log("Dummy InfluxDB writer started. Press Ctrl+C to stop.");

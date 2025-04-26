@@ -1,13 +1,9 @@
 export const generateSensorData = () => {
   const now = new Date().toISOString();
   return [
-    // Gas
     {
       measurement: "air",
-      tags: {
-        sensor_type: "airSensor",
-        sensor: "air",
-      },
+      tags: { sensor_type: "airSensor", sensor: "air" },
       fields: {
         co: Math.random() * 100,
         no2: Math.random() * 300,
@@ -15,79 +11,43 @@ export const generateSensorData = () => {
       },
       timestamp: now,
     },
-
-    // Temperature
     {
       measurement: "temperature",
-      tags: {
-        sensor_type: "temperatureSensor",
-        sensor: "temperature",
-      },
-      fields: {
-        temperature: Math.random() * 50 + 20,
-      },
+      tags: { sensor_type: "temperatureSensor", sensor: "temperature" },
+      fields: { temperature: Math.random() * 50 + 20 },
       timestamp: now,
     },
-
-    // Noise Sensors
     {
       measurement: "noise-level",
-      tags: {
-        sensor_type: "noiseSensor",
-        sensor: "noise-level",
-      },
+      tags: { sensor_type: "noiseSensor", sensor: "noise-level" },
       fields: {
         "noise-level": parseFloat((50 + Math.random() * 40).toFixed(1)),
       },
       timestamp: now,
     },
-
-    // Vibration Sensors
     {
       measurement: "vibration",
-      tags: {
-        sensor_type: "vibrationSensor",
-        sensor: "vibration",
-      },
-      fields: {
-        vibration: Math.random() * 7,
-      },
+      tags: { sensor_type: "vibrationSensor", sensor: "vibration" },
+      fields: { vibration: Math.random() * 7 },
       timestamp: now,
     },
-
-    // Motion Detectors
     {
       measurement: "motion-detected",
-      tags: {
-        sensor_type: "motionSensor",
-        sensor: "motion_detected",
-      },
-      fields: {
-        motion_detected: Math.random() > 0.7,
-      },
+      tags: { sensor_type: "motionSensor", sensor: "motion_detected" },
+      fields: { motion_detected: Math.random() > 0.7 },
       timestamp: now,
     },
-
-    // Light Intensity Sensors
     {
       measurement: "light-intensity",
-      tags: {
-        sensor_type: "lightSensor",
-        sensor: "light-intensity",
-      },
+      tags: { sensor_type: "lightSensor", sensor: "light-intensity" },
       fields: {
         "light-intensity": parseFloat((Math.random() * 1000).toFixed(2)),
       },
       timestamp: now,
     },
-
-    // Gas Leakage Detectors
     {
       measurement: "gas",
-      tags: {
-        sensor_type: "gasSensor",
-        sensor: "gas",
-      },
+      tags: { sensor_type: "gasSensor", sensor: "gas" },
       fields: {
         methane: Math.random() * 50,
         propane: Math.random() * 50,
@@ -97,27 +57,15 @@ export const generateSensorData = () => {
       },
       timestamp: now,
     },
-
-    // Emergency Status
     {
       measurement: "emergency",
-      tags: {
-        sensor_type: "emergencySensor",
-        sensor: "emergency",
-      },
-      fields: {
-        emergency: parseFloat((Math.random() * 100).toFixed(2)),
-      },
+      tags: { sensor_type: "emergencySensor", sensor: "emergency" },
+      fields: { emergency: parseFloat((Math.random() * 100).toFixed(2)) },
       timestamp: now,
     },
-
-    // Visitors
     {
       measurement: "population",
-      tags: {
-        sensor_type: "populationSensor",
-        sensor: "population",
-      },
+      tags: { sensor_type: "populationSensor", sensor: "population" },
       fields: {
         reception: Math.floor(40 + Math.random() * 20),
         sauna: Math.floor(20 + Math.random() * 15),
@@ -130,14 +78,9 @@ export const generateSensorData = () => {
       },
       timestamp: now,
     },
-
-    // Humidity
     {
       measurement: "humidity",
-      tags: {
-        sensor_type: "humiditySensor",
-        sensor: "humidity",
-      },
+      tags: { sensor_type: "humiditySensor", sensor: "humidity" },
       fields: {
         reception: Math.random() * 100,
         sauna: Math.random() * 100,
@@ -150,35 +93,20 @@ export const generateSensorData = () => {
       },
       timestamp: now,
     },
-
-    // Water Flow
     {
       measurement: "water-flow",
-      tags: {
-        sensor_type: "waterFlowDetector",
-        sensor: "water-flow",
-      },
-      fields: {
-        "water-flow": Math.random() * 60,
-      },
+      tags: { sensor_type: "waterFlowDetector", sensor: "water-flow" },
+      fields: { "water-flow": Math.random() * 60 },
       timestamp: now,
     },
-
-    // Water Level
     {
       measurement: "water-level",
-      tags: {
-        sensor_type: "waterLevelDetector",
-        sensor: "water-level",
-      },
-      fields: {
-        "water-level": getRandom(-10, 20),
-      },
+      tags: { sensor_type: "waterLevelDetector", sensor: "water-level" },
+      fields: { "water-level": getRandom(-10, 20) },
       timestamp: now,
     },
   ];
 };
-
 function getRandom(min, max) {
-  return Math.random() * (max - min) + min; // Generates a random number between min and max
+  return Math.random() * (max - min) + min;
 }

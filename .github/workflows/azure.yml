@@ -1,4 +1,7 @@
-name: Build and deploy a container to an Azure Web App
+name: DevSecOps pipeline deploying to the Azure App Service
+description: |
+  This pipeline builds and deploys a Dockerized application to Azure App Service.
+  It includes security scans for vulnerabilities, code quality checks, and compliance checks.
 
 env:
   REGISTRY: rakkaranta.azurecr.io
@@ -9,9 +12,48 @@ on:
       - main
 
 jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner for repository
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+          
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'rakkaranta'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+            
+      - name: Upload dependency check report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-check-report
+          path: reports/
+          
+      - name: Run Code Quality Check with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
   build-and-push:
     runs-on: ubuntu-latest
     environment: production
+    needs: security-scan
 
     steps:
       - uses: actions/checkout@v4
@@ -39,11 +81,68 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}
+          
+      - name: Scan Frontend Dockerfile for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: './frontend/Dockerfile.prod'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Build Frontend Image for scanning
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile.prod
+          push: false
+          load: true
+          tags: ${{ env.REGISTRY }}/frontend:scan
+          build-args: |
+            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+            NEXT_PUBLIC_APP_URL=${{secrets.NEXT_PUBLIC_APP_URL}}
+            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+            NEXTAUTH_GITHUB_ID=${{ secrets.NEXTAUTH_GITHUB_ID }}
+            NEXTAUTH_GITHUB_SECRET=${{ secrets.NEXTAUTH_GITHUB_SECRET }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+            EMAIL_FROM=${{ secrets.EMAIL_FROM }}
+            STRIPE_API_KEY=${{ secrets.STRIPE_API_KEY }}
+            STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+            NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+            NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID }}
+            NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID }}
+            NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID }}
+            NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=${{ secrets.NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID }}
+            OPENWEATHER_API_KEY=${{secrets.OPENWEATHER_API_KEY}}
+            KINDE_CLIENT_ID=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_CLIENT_SECRET=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_ISSUER_URL=${{ secrets.KINDE_ISSUER_URL}}
+            KINDE_SITE_URL=${{ secrets.KINDE_SITE_URL}}
+            KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
+            KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
+            NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
+            
+      - name: Scan Frontend Image for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'image'
+          image-ref: ${{ env.REGISTRY }}/frontend:scan
+          format: 'sarif'
+          output: 'trivy-frontend-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          
+      - name: Upload Frontend Scan Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-frontend-results.sarif'
 
       - name: Build and Push Frontend Image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
+          file: ./frontend/Dockerfile.prod
           file: ./frontend/Dockerfile.prod
           push: true
           tags: |
@@ -74,8 +173,48 @@ jobs:
             KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
             KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
             NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
+            KINDE_CLIENT_ID=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_CLIENT_SECRET=${{ secrets.KINDE_CLIENT_ID}}
+            KINDE_ISSUER_URL=${{ secrets.KINDE_ISSUER_URL}}
+            KINDE_SITE_URL=${{ secrets.KINDE_SITE_URL}}
+            KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
+            KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
+            NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/frontend:latest
           cache-to: type=inline
+          
+      # Similar scanning for Backend image
+      - name: Scan Backend Dockerfile
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: './backend/Dockerfile.prod'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+          
+      - name: Build Backend Image for scanning
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile.prod
+          push: false
+          load: true
+          tags: ${{ env.REGISTRY }}/backend:scan
+          
+      - name: Scan Backend Image
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'image'
+          image-ref: ${{ env.REGISTRY }}/backend:scan
+          format: 'sarif'
+          output: 'trivy-backend-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          
+      - name: Upload Backend Scan Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-backend-results.sarif'
 
       - name: Build and Push Backend Image
         uses: docker/build-push-action@v4
@@ -90,6 +229,16 @@ jobs:
           cache-from: type=registry,ref=${{ env.REGISTRY }}/backend:latest
           cache-to: type=inline
 
+      # Scanning and building Mosquitto
+      - name: Scan Mosquitto Dockerfile
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: './mosquitto/Dockerfile.prod'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
       - name: Build and push Mosquitto
         uses: docker/build-push-action@v4
         with:
@@ -103,6 +252,16 @@ jobs:
           build-args: |
             MQTT_USERNAME=${{ secrets.MQTT_USERNAME }}
             MQTT_PASSWORD=${{ secrets.MQTT_PASSWORD }}
+
+      # Scanning and building Mosquitto Publisher
+      - name: Scan Mosquitto Publisher Dockerfile
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: './publisher/Dockerfile'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
 
       - name: Build and push Mosquitto Publisher
         uses: docker/build-push-action@v4
@@ -119,6 +278,16 @@ jobs:
             MQTT_USERNAME=${{ secrets.MQTT_USERNAME }}
             MQTT_PASSWORD=${{ secrets.MQTT_PASSWORD }}
 
+      # Scanning and building Telegraf
+      - name: Scan Telegraf Dockerfile
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: './telegraf/Dockerfile.prod'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
       - name: Build and push Telegraf
         uses: docker/build-push-action@v4
         with:
@@ -133,14 +302,54 @@ jobs:
             DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
             DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
             DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
+            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
+            DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
+            DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
             INFLUXDB_URL=${{ secrets.INFLUXDB_URL }}
             DOCKER_INFLUXDB_INIT_USERNAME=${{ secrets.DOCKER_INFLUXDB_INIT_USERNAME }}
             DOCKER_INFLUXDB_INIT_PASSWORD=${{ secrets.DOCKER_INFLUXDB_INIT_PASSWORD }}
             DOCKER_INFLUXDB_INIT_MODE=${{ secrets.DOCKER_INFLUXDB_INIT_MODE}}
 
-  deploy:
+  security-compliance:
     runs-on: ubuntu-latest
     needs: build-and-push
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          quiet: true
+          soft_fail: false
+          framework: dockerfile,kubernetes,secrets
+          output_format: cli
+          download_external_modules: true
+          
+      - name: Scan Infrastructure for Misconfigurations
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./docker-compose.prod.yml
+          quiet: true
+          soft_fail: false
+          framework: dockerfile,kubernetes,secrets,yaml
+          output_format: sarif
+          output_file_path: infrastructure-scan.sarif
+          
+      - name: Upload Infrastructure Scan Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: infrastructure-scan.sarif
+          
+      - name: Secret Scanning
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-and-push, security-compliance]
     steps:
       - uses: actions/checkout@v4
 
@@ -148,19 +357,36 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Security Validation - Azure Resource Scan
+        uses: azure/policy-compliance-scan@v0
+        with:
+          resource-group: rakkaranta
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: rakkaranta
           resource-group-name: rakkaranta
+          resource-group-name: rakkaranta
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
-
-      - name: ✅ Show Web App URL
-        run: echo "Deployed to: https://${{ steps.deploy-to-azure.outputs.webapp-url }}"
-  
-      - name: 🧪 Post-Deploy Health Check
-        run: |
-          echo "Checking health endpoint..."
-          curl -f https://rakkaranta.online/api/health || exit 1
+          
+  post-deployment-scan:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Run DAST scan with OWASP ZAP
+        uses: zaproxy/action-baseline@v0.9.0
+        with:
+          target: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+          rules_file_name: 'zap-rules.tsv'
+          cmd_options: '-a'
+          
+      - name: Upload ZAP Scan Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-scan-results
+          path: |
+            zap-baseline-report.html
+            zap-baseline-report.md

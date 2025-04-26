@@ -1,4 +1,0 @@
-<resources>
-
-    <style name="Theme.TVWebViewApp" parent="Theme.AppCompat.DayNight.NoActionBar" />
-</resources>
