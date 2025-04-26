@@ -143,7 +143,6 @@ jobs:
         with:
           context: ./frontend
           file: ./frontend/Dockerfile.prod
-          file: ./frontend/Dockerfile.prod
           push: true
           tags: |
             ${{ env.REGISTRY }}/frontend:latest
