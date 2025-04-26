@@ -155,7 +155,6 @@ jobs:
         with:
           context: ./frontend
           file: ./frontend/Dockerfile.prod
-          file: ./frontend/Dockerfile.prod
           push: true
           tags: |
             ${{ env.REGISTRY }}/frontend:latest
@@ -379,7 +378,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: rakkaranta
-          resource-group-name: rakkaranta
           resource-group-name: rakkaranta
           slot-name: production
           configuration-file: ./docker-compose.prod.yml
