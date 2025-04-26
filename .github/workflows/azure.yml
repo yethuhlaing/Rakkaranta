@@ -2,17 +2,13 @@ name: DevSecOps pipeline deploying to the Azure App Service
 description: |
   This pipeline builds and deploys a Dockerized application to Azure App Service.
   It includes security scans for vulnerabilities, code quality checks, and compliance checks.
-
 env:
   REGISTRY: rakkaranta.azurecr.io
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+    branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   security-scan:
@@ -175,13 +171,6 @@ jobs:
             KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
             KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
             NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
-            KINDE_CLIENT_ID=${{ secrets.KINDE_CLIENT_ID}}
-            KINDE_CLIENT_SECRET=${{ secrets.KINDE_CLIENT_ID}}
-            KINDE_ISSUER_URL=${{ secrets.KINDE_ISSUER_URL}}
-            KINDE_SITE_URL=${{ secrets.KINDE_SITE_URL}}
-            KINDE_POST_LOGOUT_REDIRECT_URL=${{ secrets.KINDE_POST_LOGOUT_REDIRECT_URL}}
-            KINDE_POST_LOGIN_REDIRECT_URL=${{ secrets.KINDE_POST_LOGIN_REDIRECT_URL}}
-            NEXT_PUBLIC_WEBSOCKET_URL=${{secrets.NEXT_PUBLIC_WEBSOCKET_URL}}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/frontend:latest
           cache-to: type=inline
           
@@ -301,9 +290,6 @@ jobs:
             ${{ env.REGISTRY }}/telegraf:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
-            DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
-            DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
             DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${{ secrets.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN }}
             DOCKER_INFLUXDB_INIT_ORG=${{ secrets.DOCKER_INFLUXDB_INIT_ORG }}
             DOCKER_INFLUXDB_INIT_BUCKET=${{ secrets.DOCKER_INFLUXDB_INIT_BUCKET }}
