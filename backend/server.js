@@ -8,8 +8,7 @@ import url from 'url'
 const SERVER_RESPONSE_INTERVAL = 5 * 1000
 const SENSOR_TIME_RANGE = '15m'
 
-const app = express()
-const server = http.createServer(app)
+
 
 const defaultTimeRanges = {
     'temperature': '5m',
@@ -26,6 +25,9 @@ const defaultTimeRanges = {
     'water-flow': '5m',
 }
 const sensorTypes = Object.keys(defaultTimeRanges);
+
+const app = express();
+const server = http.createServer(app);
 
 // Create a single WebSocket server
 const wss = new WebSocketServer({ noServer: true })

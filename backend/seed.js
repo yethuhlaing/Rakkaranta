@@ -18,9 +18,7 @@ class InfluxWriter {
     this.influxDB = new InfluxDB({
       url: influx_url,
       token,
-      transportOptions: {
-        gzipThreshold: 1,
-      },
+      transportOptions: {gzipThreshold: 1},
       debug: process.env.NODE_ENV === "development",
     });
 
@@ -59,9 +57,7 @@ class InfluxWriter {
       this.lastWrite = new Date();
 
       console.log(
-        `Successfully wrote ${
-          points.length
-        } points to InfluxDB at ${this.lastWrite.toISOString()}`
+        `Successfully wrote ${points.length} points to InfluxDB at ${this.lastWrite.toISOString()}`
       );
       console.log(
         `Total writes: ${this.writeCount}, Total errors: ${this.errorCount}`
@@ -70,10 +66,7 @@ class InfluxWriter {
       return true;
     } catch (error) {
       this.errorCount++;
-      console.error(
-        `Error writing to InfluxDB (attempt ${retryCount + 1}/${MAX_RETRIES}):`,
-        error.message
-      );
+      console.error(`Error writing to InfluxDB (attempt ${retryCount + 1}/${MAX_RETRIES}):`,error.message);
 
       if (retryCount < MAX_RETRIES) {
         console.log(`Retrying in ${RETRY_DELAY}ms...`);

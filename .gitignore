@@ -32,11 +32,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables (opt-in if needed)
-frontend/.env*
-backend/.env*
-mosquitto/.env*
-telegraf/.env*
-publisher/.env*
+frontend/.env
+backend/.env
+mosquitto/.env
+telegraf/.env
+publisher/.env
 # Vercel deployment directory
 /.vercel
 

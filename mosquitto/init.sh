@@ -8,13 +8,13 @@ echo "Setting up Mosquitto password file for user: $MQTT_USERNAME"
 
 # Ensure password file exists and has proper permissions
 touch /mosquitto/config/passwd
-chmod 777 /mosquitto/config/passwd
+chmod 600 /mosquitto/config/passwd
 
 # Set wide permissions to ensure we can write
-chmod -R 777 /mosquitto
-chmod 777 /mosquitto/log/mosquitto.log
-chmod 777 /mosquitto/config/passwd
-chmod 777 /mosquitto/data/mosquitto.db
+chmod -R 600 /mosquitto
+chmod 600 /mosquitto/log/mosquitto.log
+chmod 600 /mosquitto/config/passwd
+chmod 600 /mosquitto/data/mosquitto.db
 
 # Create/update the user credentials
 mosquitto_passwd -b /mosquitto/config/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD"
@@ -27,3 +27,4 @@ ls -la /mosquitto/log/mosquitto.log
 exec /usr/sbin/mosquitto -c /mosquitto/config/mosquitto.conf
 
 echo "Password file created successfully. Starting Mosquitto..."
+
