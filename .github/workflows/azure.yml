@@ -51,7 +51,7 @@ jobs:
             --enableRetired
             
       - name: Upload dependency check report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
           path: reports/
@@ -394,7 +394,7 @@ jobs:
           cmd_options: '-a'
           
       - name: Upload ZAP Scan Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: zap-scan-results
           path: |
