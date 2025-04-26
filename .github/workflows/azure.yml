@@ -11,6 +11,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  misconfiguration-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./docker-compose.prod.yml
+          quiet: true
+          soft_fail: false
+          framework: dockerfile,kubernetes,secrets,yaml
+          output_format: sarif
+          output_file_path: infrastructure-scan.sarif
+
   security-scan:
     runs-on: ubuntu-latest
     steps:
