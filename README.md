@@ -1,13 +1,12 @@
 # Rakkaranta
 
-## Team Members
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=o8TD4SVxuME" target="_blank">
+    <img src="https://img.youtube.com/vi/o8TD4SVxuME/0.jpg" alt="Watch the video" width="640" />
+  </a>
+</p>
 
-- **Ye Thu Hlaing**: Project Manager  
-- **Ahanaf Adil**: Frontend Developer  
-- **Dianzhong Wang**: Embedded Engineer  
-- **Qian Wang**: Scrum master
 
----
 ## Overview
 
 The Rakkaranta Resort Dashboard provides real-time weather data, IoT sensor pipeline, activity recommendations, and resort management tools specifically designed for the unique needs of a Finnish wilderness resort. This system helps staff provide exceptional guest experiences by offering accurate, location-specific information and resource management capabilities.
