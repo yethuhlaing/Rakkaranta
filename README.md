@@ -477,11 +477,5 @@ docker-compose up -d
 - Restrict network access to the MQTT broker and databases
 - Enable TLS for production deployments
 - Regularly update Docker images for security patches
-
-## Project Documentation
-
-- **Project Plan**: Documented in the `docs/project_plan.md` file.  
-- **Requirements**: Stored in the `docs/requirements.md` file.  
-- **Research Findings**: Recorded in the `docs/research.md` file.
   
 ---
